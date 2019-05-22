@@ -1,1 +1,1 @@
-# Simple game I'm making as an university assignment
+# Nine men's morris implementation I'm making as an university assignment
