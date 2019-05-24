@@ -116,17 +116,17 @@ void game::set_field(player &plr)
 	int position;
 	available_field_t *current = nullptr;
 	current = get_available_fields();
-	printf("Wolne pola:\n");
+	printf("Available fields:\n");
 	while(current!=nullptr)
 	{
 		printf("%d ", current->field);
 		current = current->next;
 	}
 	putchar('\n');
-	printf("Wybierz pole ");
+	printf("Pick a field: ");
 	while (scanf_s("%d", &position) != 1 || position < 0 || position > 23 || getchar() != '\n')
 	{
-		printf("Pole powinna byc liczba calowita z przedzialu od 0 do 23.\n");
+		printf("Error, Field should be an integer from 0 to 23. Pick field again:\n");
 		while (getchar() != '\n');
 	}
 	set_pawn(plr, position);
