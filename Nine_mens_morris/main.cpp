@@ -4,6 +4,6 @@
 
 int main(int argc, char* argv[])
 {
-	srand(time(nullptr)); 
+	srand(time(0)); 
 	game::print_board();
 }
