@@ -5,6 +5,34 @@
 
 field_t game::fields_[24];
 
+int game::field_moves_[24][4] = 
+{
+	{1, 9, -1, -1},
+	{0, 2, 4, -1},
+	{1, 14, -1, -1},
+	{4, 10, -1, -1},
+	{1, 3, 5, 7},
+	{4, 13, -1, -1},
+	{7, 11, -1, -1},
+	{4, 6, 8, -1},
+	{7, 12, -1, -1},
+	{0, 10, 21, -1},
+	{3, 9, 11, 18},
+	{6, 10, 15, -1},
+	{8, 13, 17, -1},
+	{5, 12, 14, 20},
+	{2, 13, 23, -1},
+	{11, 16, -1, -1},
+	{15, 17, 19, -1},
+	{12, 16, -1, -1},
+	{10, 19, -1, -1},
+	{16, 18, 20, 22},
+	{13, 19, -1, -1},
+	{9, 22, -1, -1},
+	{19, 21, 23, -1},
+	{14, 22, -1, -1}
+};
+
 game::game()
 {
 	for(int i = 0; i < 24; i++)
@@ -28,7 +56,6 @@ void game::start_game()
 	player player2;
 	draw_color(player1, player2);
 	play(player1, player2);
-
 }
 
 void game::draw_color(player &player1, player &player2)
@@ -47,20 +74,108 @@ void game::draw_color(player &player1, player &player2)
 	}
 }
 
-void game::move(player &plr)
+void game::move(int player_id, const int position)
 {
-	if(plr.get_start_number() == 0)
+	print_available_for_position(position);
+
+}
+
+void game::print_available_for_position(int position)
+{
+	available_field_t *head = get_available_for_position(position);
+	if(head == nullptr)
 	{
-		printf("Move one of your pawns");
+		printf("None.");
 	}
 	else
 	{
-		
+		available_field_t *current = head;
+		while(current!=nullptr)
+		{
+			printf("%d ", current->field);
+			current = current->next;
+		}
 	}
+	putchar('\n');
+}
+
+bool game::pick_field(int position)
+{
+	printf("Pick field: ");
+	int field;
+	bool is_valid = true;
+	if(scanf_s("%d", &field)!=1)
+	{
+		return false;
+	}
+	available_field_t *head = get_available_for_position(position);
+	available_field_t *current = head;
+	while (current!=nullptr)
+	{
+		if(current->field == field)
+		{
+			return true;
+		}
+		current = current->next;
+	}
+	return false;
+}
+
+available_field_t* game::get_available_for_position(const int position)
+{
+	int j = 0;
+	available_field_t *head = nullptr;
+	available_field_t *current = nullptr;
+	for (int i = 0; i < 4; ++i)
+	{
+		if (field_moves_[position][i] == -1)
+		{
+			break;
+		}
+		if (is_available(field_moves_[position][i]))
+		{
+			if (head == nullptr)
+			{
+				head = (available_field_t *)malloc(sizeof(available_field_t*));
+				head->field = field_moves_[position][i];
+				current = head;
+				current->next = nullptr;
+			}
+			else
+			{
+				current->next = (available_field_t *)malloc(sizeof(available_field_t*));
+				current = current->next;
+				current->field = field_moves_[position][i];
+				current->next = nullptr;
+			}
+			++j;
+		}
+	}
+	if (j == 0)
+	{
+		return nullptr;
+	}
+	return head;
 }
 
 
-bool game::set_pawn(player &plr, const int position)
+bool game::is_available(const int field)
+{
+	available_field_t *head = get_available_fields();
+	available_field_t *current = head;
+	while(current != nullptr)
+	{
+		if(current->field == field)
+		{
+			return true;
+		}
+		current = current->next;
+	}
+	return false;
+}
+
+
+bool game::set_pawn(const int player_id, const int position)
 {
 	if(fields_[position].position)
 	{
@@ -69,7 +184,7 @@ bool game::set_pawn(player &plr, const int position)
 	}
 
 	fields_[position].position = true;
-	fields_[position].id = plr.get_id();
+	fields_[position].id = player_id;
 	return true;
 }
  
@@ -97,12 +212,14 @@ available_field_t* game::get_available_fields()
 	{
 		if(!fields_[i].position && head == nullptr)
 		{
+			head = (available_field_t*)(malloc(sizeof(available_field_t*)));
 			head->field = i;
 			current = head;
 			current->next = nullptr;
 		}
 		else if(!fields_[i].position)
 		{
+			current->next = (available_field_t*)malloc(sizeof(available_field_t*));
 			current->next->field = i;
 			current = current->next;
 			current->next = nullptr;
@@ -111,7 +228,7 @@ available_field_t* game::get_available_fields()
 	return head;
 }
 
-void game::set_field(player &plr)
+void game::set_field(int player_id)
 {
 	int position;
 	available_field_t *current = nullptr;
@@ -129,7 +246,7 @@ void game::set_field(player &plr)
 		printf("Error, Field should be an integer from 0 to 23. Pick field again:\n");
 		while (getchar() != '\n');
 	}
-	set_pawn(plr, position);
+	set_pawn(player_id, position);
 }
 
 void game::play(player& player1, player& player2)
@@ -144,21 +261,21 @@ void game::play(player& player1, player& player2)
 		{
 			if (player1.get_id() == 1)
 			{
-				set_field(player1);
+				set_field(player1.get_id());
 				if (is_ended(player1, player2))
 				{
 					break;
 				}
-				set_field(player2);
+				set_field(player2.get_id());
 			}
 			if (player1.get_id() == 2)
 			{
-				set_field(player2);
+				set_field(player2.get_id());
 				if (is_ended(player1, player2))
 				{
 					break;
 				}
-				set_field(player1);
+				set_field(player1.get_id());
 			}
 		}
 	}
