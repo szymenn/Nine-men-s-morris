@@ -35,7 +35,7 @@ int game::field_moves_[24][4] =
 
 game::game()
 {
-	for(int i = 0; i < 24; i++)
+	for(int i = 0; i < 24; ++i)
 	{
 		fields_[i].position = false;
 		fields_[i].id = 0;
@@ -77,7 +77,10 @@ void game::draw_color(player &player1, player &player2)
 void game::move(int player_id, const int position)
 {
 	print_available_for_position(position);
-
+	while(!pick_field(position))
+	{
+		
+	}
 }
 
 void game::print_available_for_position(int position)
