@@ -9,6 +9,7 @@ typedef struct field{
 typedef struct available_field{
 	int field;
 	struct available_field *next;
+	struct available_field *prev;
 }available_field_t;
 class game{
 	static field_t fields_[24];
@@ -28,11 +29,13 @@ class game{
 	static void set_field(player &plr);
 	static available_field_t *get_available_for_position(int position);
 	static void play(player &player1, player &player2);
-	static void print_board_better();
 	static bool is_taken_by_player(int player_id, int position);
 	static int check_lines(int player_id);
 	static void remove_op_pawn(int num_pawns);
 	static available_field_t *get_removable_fields(int player_id);
+	static void print_removable_fields(int player_id);
+	static available_field_t *get_new_node(int field);
+	static bool is_already_in(available_field_t *head, int field);
 public:
 	game();
 	static void print_board();

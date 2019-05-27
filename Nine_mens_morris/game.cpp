@@ -71,48 +71,6 @@ void game::print_board()
 	printf("21------ 22 -------23\n");
 }
 
-void game::print_board_better()
-{
-	if(fields_[0].is_taken && fields_[0].id == 0)
-	{
-		printf("w ------- ");
-	}
-	else if(fields_[0].is_taken && fields_[0].id == 1)
-	{
-		printf("b ------- ");
-	}
-	else
-	{
-		printf("0 ------- ");
-	}
-	if (fields_[1].is_taken && fields_[1].id == 0)
-	{
-		printf("w ------- ");
-	}
-	else if (fields_[1].is_taken && fields_[1].id == 1)
-	{
-		printf("b ------- ");
-	}
-	else
-	{
-		printf("1 ------- ");
-	}
-	if (fields_[2].is_taken && fields_[2].id == 0)
-	{
-		printf("w\n");
-	}
-	else if (fields_[2].is_taken && fields_[2].id == 1)
-	{
-		printf("b\n");
-	}
-	else
-	{
-		printf("2\n");
-	}
-	printf("|         |         |");
-}
-
-
 void game::start_game()
 {
 	player player1;
@@ -402,13 +360,10 @@ void game::play(player& player1, player& player2)
 				printf("White pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
 				lines = check_lines(player1.get_id());
-				if(lines == 0)
+				if(lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available:\n");
+					print_removable_fields(player2.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -416,13 +371,10 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				lines = check_lines(player2.get_id());
-				if (lines == 0)
+				if(lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available: \n");
+					print_removable_fields(player1.get_id());
 				}
 				move(player2.get_id(), select_position(player2.get_id()));
 			}
@@ -431,13 +383,10 @@ void game::play(player& player1, player& player2)
 				printf("White pawns turn:\n");
 				move(player2.get_id(), select_position(player2.get_id()));
 				lines = check_lines(player2.get_id());
-				if (lines == 0)
+				if (lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available:\n");
+					print_removable_fields(player1.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -446,13 +395,10 @@ void game::play(player& player1, player& player2)
 				printf("Black pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
 				lines = check_lines(player1.get_id());
-				if (lines == 0)
+				if (lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available:\n");
+					print_removable_fields(player2.get_id());
 				}
 			}
 		}
@@ -463,13 +409,10 @@ void game::play(player& player1, player& player2)
 				printf("White pawns turn:\n");
 				set_field(player1);
 				lines = check_lines(player1.get_id());
-				if (lines == 0)
+				if (lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available:\n");
+					print_removable_fields(player2.get_id());
 				}
 				if (is_ended(player1, player2))
 				{
@@ -478,13 +421,10 @@ void game::play(player& player1, player& player2)
 				printf("Black pawns turn:\n");
 				set_field(player2);
 				lines = check_lines(player2.get_id());
-				if (lines == 0)
+				if (lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available:\n");
+					print_removable_fields(player1.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -496,28 +436,18 @@ void game::play(player& player1, player& player2)
 				printf("White pawns turn:\n");
 				set_field(player2);
 				lines = check_lines(player2.get_id());
-				if (lines == 0)
+				if (lines > 0) 
 				{
-					printf("GHURIERWUREHRUJHUJ");
+					printf("Remove one of the available: \n");
+					print_removable_fields(player1.get_id());
 				}
-				else if(lines > 0)
-				{
-					printf("lines: %d\n", lines);
-				}
-				if (is_ended(player1, player2))
-				{
-					break;
-				} 
 				printf("Black pawns turn:\n");
 				set_field(player1);
 				lines = check_lines(player1.get_id());
-				if (lines == 0)
+				if (lines > 0)
 				{
-					printf("GHURIERWUREHRUJHUJ");
-				}
-				else
-				{
-					printf("lines: %d\n", lines);
+					printf("Remove one of the available: \n");
+					print_removable_fields(player2.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -549,45 +479,98 @@ int game::check_lines(const int player_id)
 	return count;
 }
 
-void game::remove_op_pawn(int num_pawns)
-{
-	
-}
+//void game::remove_op_pawn(int num_pawns)
+//{
+//	
+//}
 
 available_field_t* game::get_removable_fields(int player_id)
 {
 	available_field_t *head = nullptr;
 	available_field_t *current = nullptr;
-	for(int i = 0; i < 16; ++i)
+	for (int i = 0; i < 16; ++i)
 	{
-		int count = 0;
-		for(int j = 0; j < 3; ++j)
+		int count_lines = 0;
+		for (int j = 0; j < 3; ++j)
 		{
-			if (fields_[field_lines_[i][j]].is_taken && fields_[field_lines_[i][j]].id == player_id)
+			if (fields_[field_lines_[i][j]].is_taken && fields_[field_lines_[i][j]].id == player_id && !is_already_in(head, field_lines_[i][j]))
 			{
-				++count;
-				if(head==nullptr)
+				if(head == nullptr)
 				{
 					head = (available_field_t*)malloc(sizeof(available_field_t*));
 					current = head;
-					current->field = field_lines_[i][j];
 					current->next = nullptr;
+					current->prev = nullptr;
 				}
 				else
 				{
 					current->next = (available_field_t*)malloc(sizeof(available_field_t*));
+					available_field_t* temp = current;
 					current = current->next;
-					current->field = field_lines_[i][j];
 					current->next = nullptr;
+					current->prev = temp;
 				}
+				current->field = field_lines_[i][j];
+				++count_lines;
 			}
 		}
-		if(count != 3)
+		if (count_lines == 3)
 		{
-			current = nullptr;
+			for(int k = 0; k < 3; ++k)
+			{
+				current->field = -1;
+				current = current->prev;
+			}
+			current = head;
+			while(current->next!=nullptr)
+			{
+				current = current->next;
+			}
 		}
 	}
 	return head;
+}
+
+bool game::is_already_in(available_field_t *head, const int field)
+{
+	if(head == nullptr)
+	{
+		return false;
+	}
+	available_field_t *current = head;
+	while(current!=nullptr)
+	{
+		if (current->field == field || current->field == -1)
+		{
+			return true;
+		}
+		current = current->next;
+	}
+	return false;
+}
+
+void game::print_removable_fields(int player_id)
+{
+	available_field_t *head = get_removable_fields(player_id);
+	available_field_t *current = head;
+	if(head == nullptr)
+	{
+		printf("There's nothing to remove.\n");
+	}
+	else
+	{
+		while(current!=nullptr)
+		{
+			if(current->field == -1)
+			{
+				current = current->next;
+				continue;
+			}
+			printf("%d ", current->field);
+			current = current->next;
+		}
+	}
+	putchar('\n');
 }
 
 
