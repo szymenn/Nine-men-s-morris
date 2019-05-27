@@ -13,6 +13,7 @@ typedef struct available_field{
 class game{
 	static field_t fields_[24];
 	static int field_moves_[24][4];
+	static int field_lines_[16][3];
 	static void draw_color(player &player1, player &player2);
 	static bool is_ended(player &player1, player &player2);
 	static bool set_pawn(player &plr, int position);
@@ -29,6 +30,9 @@ class game{
 	static void play(player &player1, player &player2);
 	static void print_board_better();
 	static bool is_taken_by_player(int player_id, int position);
+	static int check_lines(int player_id);
+	static void remove_op_pawn(int num_pawns);
+	static available_field_t *get_removable_fields(int player_id);
 public:
 	game();
 	static void print_board();
