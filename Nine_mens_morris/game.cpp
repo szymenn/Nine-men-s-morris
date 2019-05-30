@@ -281,7 +281,6 @@ bool game::set_pawn(player &plr, const int position)
 	plr.set_start_number(plr.get_start_number() - 1);
 	return true;
 }
- 
 
 bool game::is_ended(player& player1, player& player2)
 {
@@ -531,7 +530,7 @@ int game::check_lines(const int player_id)
 		int count_lines = 0;
 		for(int j = 0; j < 3; ++j)
 		{
-			if(fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id)
+			if(fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && field_lines_[i].is_changed)
 			{
 				++count_lines;
 			}
@@ -543,6 +542,42 @@ int game::check_lines(const int player_id)
 	}
 	return count;
 }
+
+available_field_t* game::get_lines(const int player_id)
+{
+	available_field_t *head = nullptr;
+	available_field_t *current = nullptr;
+	for (int i = 0; i < 16; ++i)
+	{
+		int count_lines = 0;
+		for (int j = 0; j < 3; ++j)
+		{
+			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && field_lines_[i].is_changed)
+			{
+				++count_lines;
+			}
+		}
+		if (count_lines == 3)
+		{
+			if(head == nullptr)
+			{
+				head = (available_field_t*)malloc(sizeof(available_field_t*));
+				current = head;
+				current->field = i;
+				current->next = nullptr;
+			}
+			else
+			{
+				current->next = (available_field_t*)malloc(sizeof(available_field_t*));
+				current = current->next;
+				current->field = i;
+				current->next = nullptr;
+			}
+		}
+	}
+	return head;
+}
+
 
 void game::remove_op_pawn(int num_pawns, player &plr)
 {

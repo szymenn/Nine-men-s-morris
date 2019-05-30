@@ -37,6 +37,7 @@ class game{
 	static bool is_taken_by_player(int player_id, int position);
 	static int check_lines(int player_id);
 	static void remove_op_pawn(int num_pawns, player &plr);
+	static available_field_t *get_lines(int player_id);
 	static available_field_t *get_removable_fields(int player_id);
 	static void print_removable_fields(int player_id);
 	static bool is_already_in(available_field_t *head, int field);
