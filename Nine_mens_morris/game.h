@@ -31,7 +31,7 @@ class game{
 	static void play(player &player1, player &player2);
 	static bool is_taken_by_player(int player_id, int position);
 	static int check_lines(int player_id);
-	static void remove_op_pawn(int num_pawns);
+	static void remove_op_pawn(int num_pawns, int player_id);
 	static available_field_t *get_removable_fields(int player_id);
 	static void print_removable_fields(int player_id);
 	static available_field_t *get_new_node(int field);
