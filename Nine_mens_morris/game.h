@@ -18,6 +18,8 @@ typedef struct available_field{
 }available_field_t;
 class game{
 	static field_t fields_[24];
+	static available_field_t *head_player_1_;
+	static available_field_t *head_player_2_;
 	static int field_moves_[24][4];
 	static field_line_t field_lines_[16];
 	static void draw_color(player &player1, player &player2);
@@ -35,7 +37,7 @@ class game{
 	static available_field_t *get_available_for_position(int position);
 	static void play(player &player1, player &player2);
 	static bool is_taken_by_player(int player_id, int position);
-	static int check_lines(int player_id);
+	static int count_lines(int player_id);
 	static void remove_op_pawn(int num_pawns, player &plr);
 	static available_field_t *get_lines(int player_id);
 	static available_field_t *get_removable_fields(int player_id);
@@ -43,6 +45,8 @@ class game{
 	static bool is_already_in(available_field_t *head, int field);
 	static void remove(player &plr);
 	static bool is_removable(int field, int player_id);
+	static bool check_lines(int player_id, available_field_t *head);
+	static bool contains(available_field_t *head, int field);
 public:
 	game();
 	static void print_board();

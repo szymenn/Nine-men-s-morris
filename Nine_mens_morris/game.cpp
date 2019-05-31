@@ -6,6 +6,10 @@
 
 field_t game::fields_[24];
 
+available_field_t *game::head_player_1_ = nullptr;
+
+available_field_t *game::head_player_2_ = nullptr;
+
 int game::field_moves_[24][4] = 
 {
 	{1, 9, -1, -1},
@@ -33,26 +37,6 @@ int game::field_moves_[24][4] =
 	{19, 21, 23, -1},
 	{14, 22, -1, -1}
 };
-
-//int game::field_lines_[16][3] =
-//{
-//	{0, 1, 2},
-//	{0, 9, 21},
-//	{21, 22, 23},
-//	{2, 14, 23},
-//	{3, 4, 5},
-//	{3, 10, 18},
-//	{18, 19, 20},
-//	{5, 13, 20},
-//	{6, 7, 8},
-//	{6, 11, 15},
-//	{15, 16, 17},
-//	{8, 12, 17},
-//	{1, 4, 7},
-//	{9, 10, 11},
-//	{16, 19, 22},
-//	{12, 13, 14}
-//};
 
 field_line_t game::field_lines_[16] =
 {
@@ -415,6 +399,53 @@ void game::set_field(player &plr)
 	set_pawn(plr, position);
 }
 
+bool game::check_lines(int player_id, available_field_t* head)
+{
+	if(head == nullptr)
+	{
+		return true;
+	}
+	available_field_t *current = head;
+	available_field_t *head_temp = get_lines(player_id);
+	if(head_temp == nullptr)
+	{
+		while(current != nullptr)
+		{
+			field_lines_[current->field].is_changed = false;
+			current = current->next;
+		}
+		return true;
+	}
+	available_field_t *current_temp = head_temp;
+	current = head;
+	while(current != nullptr)
+	{
+		if(!contains(head_temp, current->field))
+		{
+			field_lines_[current->field].is_changed = false;
+		}
+		current = current->next;
+	}
+	
+}
+
+bool game::contains(available_field_t *head, const int field)
+{
+	if(head == nullptr)
+	{
+		return false;
+	}
+	available_field_t *current = head;
+	while(current != nullptr)
+	{
+		if(current->field == field)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void game::play(player& player1, player& player2)
 {
 	while (!is_ended(player1, player2))
@@ -426,11 +457,15 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
-				lines = check_lines(player1.get_id());
-				if(lines > 0)
+				if (check_lines(player1.get_id(), head_player_1_))
 				{
-					printf("Remove one of the available:\n");
-					print_removable_fields(player2.get_id());
+					lines = count_lines(player1.get_id());
+					if (lines > 0)
+					{
+						printf("Remove one of the available:\n");
+						print_removable_fields(player2.get_id());
+					}
+					head_player_1_ = get_lines(player1.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -438,10 +473,14 @@ void game::play(player& player1, player& player2)
 				}
 				move(player2.get_id(), select_position(player2.get_id()));
 				printf("Black pawns turn:\n");
-				lines = check_lines(player2.get_id());
-				if (lines > 0)
+				if (check_lines(player2.get_id(), head_player_2_))
 				{
-					remove_op_pawn(lines, player1);
+					lines = count_lines(player2.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player1);
+					}
+					head_player_2_ = get_lines(player2.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -452,10 +491,14 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				move(player2.get_id(), select_position(player2.get_id()));
-				lines = check_lines(player2.get_id());
-				if (lines > 0)
+				if (check_lines(player2.get_id(), head_player_2_))
 				{
-					remove_op_pawn(lines, player1);
+					lines = count_lines(player2.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player1);
+					}
+					head_player_2_ = get_lines(player2.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -463,10 +506,14 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
-				lines = check_lines(player1.get_id());
-				if (lines > 0)
+				if (check_lines(player1.get_id(), head_player_1_))
 				{
-					remove_op_pawn(lines, player2);
+					remove_op_pawn(count_lines(player1.get_id()), player2);
+					head_player_1_ = get_lines(player1.get_id());
+				}
+				if(is_ended(player1, player2))
+				{
+					break;
 				}
 			}
 		}
@@ -476,10 +523,14 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player1);
-				lines = check_lines(player1.get_id());
-				if (lines > 0)
+				if (check_lines(player1.get_id(), head_player_1_))
 				{
-					remove_op_pawn(lines, player2);
+					lines = count_lines(player1.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player2);
+					}
+					head_player_1_ = get_lines(player1.get_id());
 				}
 				if (is_ended(player1, player2))
 				{
@@ -487,10 +538,14 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				set_field(player2);
-				lines = check_lines(player2.get_id());
-				if (lines > 0)
+				if (check_lines(player2.get_id(), head_player_2_))
 				{
-					remove_op_pawn(lines, player1);
+					lines = count_lines(player2.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player1);
+					}
+					head_player_2_ = get_lines(player2.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -501,17 +556,29 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player2);
-				lines = check_lines(player2.get_id());
-				if (lines > 0) 
+				if (check_lines(player2.get_id(), head_player_2_))
 				{
-					remove_op_pawn(lines, player1);
+					lines = count_lines(player2.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player1);
+					}
+					head_player_2_ = get_lines(player2.get_id());
+				}
+				if(is_ended(player1, player2))
+				{
+					break;
 				}
 				printf("Black pawns turn:\n");
 				set_field(player1);
-				lines = check_lines(player1.get_id());
-				if (lines > 0)
+				if (check_lines(player1.get_id(), head_player_1_))
 				{
-					remove_op_pawn(lines, player2);
+					lines = count_lines(player1.get_id());
+					if (lines > 0)
+					{
+						remove_op_pawn(lines, player2);
+					}
+					head_player_1_ = get_lines(player1.get_id());
 				}
 				if(is_ended(player1, player2))
 				{
@@ -522,7 +589,7 @@ void game::play(player& player1, player& player2)
 	}
 }
 
-int game::check_lines(const int player_id)
+int game::count_lines(const int player_id)
 {
 	int count = 0;
 	for(int i = 0; i < 16; ++i)
@@ -542,6 +609,8 @@ int game::check_lines(const int player_id)
 	}
 	return count;
 }
+
+
 
 available_field_t* game::get_lines(const int player_id)
 {
