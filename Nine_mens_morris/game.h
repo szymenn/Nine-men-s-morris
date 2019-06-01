@@ -38,15 +38,17 @@ class game{
 	static void play(player &player1, player &player2);
 	static bool is_taken_by_player(int player_id, int position);
 	static int count_lines(int player_id);
-	static void remove_op_pawn(int num_pawns, player &plr);
+	static void remove_op_pawn(available_field_t *head, player &plr);
 	static available_field_t *get_lines(int player_id);
 	static available_field_t *get_removable_fields(int player_id);
 	static void print_removable_fields(int player_id);
 	static bool is_already_in(available_field_t *head, int field);
 	static void remove(player &plr);
 	static bool is_removable(int field, int player_id);
-	static bool check_lines(int player_id, available_field_t *head);
+	static void check_lines(int player_id, available_field_t *head);
 	static bool contains(available_field_t *head, int field);
+	static available_field_t *get_taken_lines(int player_id);
+	static void print_available();
 public:
 	game();
 	static void print_board();
