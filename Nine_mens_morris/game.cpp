@@ -7,9 +7,11 @@
 
 field_t game::fields_[24];
 
-available_field_t *game::head_player_1_ = nullptr;
 
-available_field_t *game::head_player_2_ = nullptr;
+
+linked_list<int> game::list_player_1_;
+
+linked_list<int> game::list_player_2_;
 
 int game::field_moves_[24][4] = 
 {
@@ -289,7 +291,7 @@ void game::print_taken_fields(int player_id)
 	list.print();
 }
 
-bool game::is_taken_by_player(const int player_id, int position)
+bool game::is_taken_by_player(const int player_id, const int position)
 {
 	linked_list<int> list = get_taken_fields(player_id);
 	return list.contains(position);
@@ -328,33 +330,33 @@ void game::play(player& player1, player& player2)
 {
 	while (!is_ended(player1, player2))
 	{
-		available_field_t *head_lines;
+		linked_list<int> temp_list;
 		if (player1.get_start_number() == 0)
 		{
 			if (player1.get_id() == 0)
 			{
 				printf("White pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
-				check_lines(player1.get_id(), head_player_1_);
-				head_lines = get_lines(player1.get_id());
-				if (head_lines != nullptr)
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player2);
+					remove_op_pawn(temp_list, player2);
 				}
-				head_player_1_ = head_lines;
+				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
 				}
 				move(player2.get_id(), select_position(player2.get_id()));
-				check_lines(player2.get_id(), head_player_2_);
-				head_lines = get_lines(player2.get_id());
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
 				printf("Black pawns turn:\n");
-				if (head_lines != nullptr)
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player1);
+					remove_op_pawn(temp_list, player1);
 				}
-				head_player_2_ = head_lines;
+				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
@@ -364,26 +366,26 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				move(player2.get_id(), select_position(player2.get_id()));
-				check_lines(player2.get_id(), head_player_2_);
-				head_lines = get_lines(player2.get_id());
-				if (head_lines != nullptr)
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player1);
+					remove_op_pawn(temp_list, player1);
 				}
-				head_player_2_ = head_lines;
+				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
 				}
 				printf("Black pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
-				check_lines(player1.get_id(), head_player_1_);
-				head_lines = get_lines(player1.get_id());
-				if (head_lines != nullptr)
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player2);
+					remove_op_pawn(temp_list, player2);
 				}
-				head_player_1_ = head_lines;
+				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
@@ -396,26 +398,26 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player1);
-				check_lines(player1.get_id(), head_player_1_);
-				head_lines = get_lines(player1.get_id());
-				if (head_lines != nullptr)
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player2);
+					remove_op_pawn(temp_list, player2);
 				}
-				head_player_1_ = head_lines;
+				list_player_1_ = temp_list;
 				if (is_ended(player1, player2))
 				{
 					break;
 				}
 				printf("Black pawns turn:\n");
 				set_field(player2);
-				check_lines(player2.get_id(), head_player_2_);
-				head_lines = get_lines(player2.get_id());
-				if(head_lines != nullptr)
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if(!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player1);
+					remove_op_pawn(temp_list, player1);
 				}
-				head_player_2_ = head_lines;
+				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
@@ -425,26 +427,26 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player2);
-				check_lines(player2.get_id(), head_player_2_);
-				head_lines = get_lines(player2.get_id());
-				if (head_lines != nullptr)
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player1);
+					remove_op_pawn(temp_list, player1);
 				}
-				head_player_2_ = head_lines;
+				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
 				}
 				printf("Black pawns turn:\n");
 				set_field(player1);
-				check_lines(player1.get_id(), head_player_1_);
-				head_lines = get_lines(player1.get_id());
-				if (head_lines != nullptr)
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
 				{
-					remove_op_pawn(head_lines, player2);
+					remove_op_pawn(temp_list, player2);
 				}
-				head_player_1_ = head_lines;
+				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
 				{
 					break;
@@ -454,78 +456,46 @@ void game::play(player& player1, player& player2)
 	}
 }
 
-void game::check_lines(const int player_id, available_field_t* head)
+void game::check_lines(const int player_id, linked_list<int> &list)
 {
-	available_field_t *current = head;
-	available_field_t *head_temp = get_taken_lines(player_id);
-	if (head == nullptr)
+	linked_list<int> temp_list = get_taken_lines(player_id);
+	if (list.is_empty())
 	{
 		return;
 	}
-	if (head_temp == nullptr && head != nullptr)
+	if (temp_list.is_empty() && !list.is_empty())
 	{
-		while (current != nullptr)
+		for(int i = 0; i < list.length(); ++i)
 		{
-			field_lines_[current->field].is_changed = false;
-			field_lines_[current->field].id = -1;
-			current = current->next;
+			field_lines_[i].is_changed = false;
+			field_lines_[i].id = -1;
 		}
 	}
 	else
 	{
-		current = head;
-		while (current != nullptr)
+		for(int i = 0; i < list.length(); ++i)
 		{
-			if (!contains(head_temp, current->field))
+			if(!temp_list.contains(list[i]))
 			{
-				field_lines_[current->field].is_changed = false;
-				field_lines_[current->field].id = -1;
+				field_lines_[list[i]].is_changed = false;
+				field_lines_[list[i]].id = -1;
 			}
-			current = current->next;
 		}
 	}
 }
 
-available_field_t* game::get_taken_lines(const int player_id)
+linked_list<int> game::get_taken_lines(const int player_id)
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for (int i = 0; i < 16; ++i)
 	{
 		int count_lines = 0;
 		if(field_lines_[i].id == player_id)
 		{
-			if(head == nullptr)
-			{
-				head = (available_field_t*)malloc(sizeof(available_field_t*));
-				current = head;
-				current->field = i;
-				current->next = nullptr;
-			}
-			else 
-			{
-				current->next = (available_field*)malloc(sizeof(available_field_t*));
-				current = current->next;
-				current->field = i;
-				current->next = nullptr;
-				
-			}
+			list.add(i);
 		}
 	}
-	return head;
-}
-
-bool game::contains(available_field_t *head, const int field)
-{
-	available_field_t *current = head;
-	while (current != nullptr)
-	{
-		if (current->field == field)
-		{
-			return true;
-		}
-	}
-	return false;
+	return list;
 }
 
 int game::count_lines(const int player_id)
@@ -551,10 +521,9 @@ int game::count_lines(const int player_id)
 
 
 
-available_field_t* game::get_lines(const int player_id)
+linked_list<int> game::get_lines(const int player_id)
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for (int i = 0; i < 16; ++i)
 	{
 		int count_lines = 0;
@@ -567,37 +536,21 @@ available_field_t* game::get_lines(const int player_id)
 		}
 		if (count_lines == 3)
 		{
-			if(head == nullptr)
-			{
-				head = (available_field_t*)malloc(sizeof(available_field_t*));
-				current = head;
-				current->field = i;
-				field_lines_[i].id = player_id;
-				current->next = nullptr;
-			}
-			else
-			{
-				current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-				current = current->next;
-				current->field = i;
-				field_lines_[i].id = player_id;
-				current->next = nullptr;
-			}
+			list.add(i);
+			field_lines_[i].id = player_id;
 		}
 	}
-	return head;
+	return list;
 }
 
 
-void game::remove_op_pawn(available_field_t *head, player &plr)
+void game::remove_op_pawn(linked_list<int> &list, player &plr)
 {
-	available_field_t *current = head;
-	while (current != nullptr)
+	for (int i = 0; i < list.length(); ++i)
 	{
-		field_lines_[current->field].is_changed = true;
+		field_lines_[list[i]].is_changed = true;
 		print_removable_fields(plr.get_id());
 		remove(plr);
-		current = current->next;
 	}
 }
 
@@ -616,10 +569,9 @@ void game::remove(player &plr)
 	plr.set_pawn_number(plr.get_pawn_number() - 1);
 }
 
-available_field_t* game::get_removable_fields(const int player_id)
+linked_list<int> game::get_removable_fields(const int player_id)
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for (int i = 0; i < 16; ++i)
 	{
 		int count_lines = 0;
@@ -627,95 +579,51 @@ available_field_t* game::get_removable_fields(const int player_id)
 		{
 			if (field_lines_[i].id == player_id)
 			{
-				if (head == nullptr)
-				{
-					head = (available_field_t*)malloc(sizeof(available_field_t*));
-					current = head;
-					current->field = -1;
-					current->next = nullptr;
-				}
-				else
-				{
-					current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-					current = current->next;
-					current->field = -1;
-					current->next = nullptr;
-				}
+				list.add(-1);
 			}
-			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(head, field_lines_[i].line[j]))
+			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(list, field_lines_[i].line[j]))
 			{
-				if (head == nullptr)
-				{
-					head = (available_field_t*)malloc(sizeof(available_field_t*));
-					current = head;
-					current->field = field_lines_[i].line[j];
-					current->next = nullptr;
-				}
-				else
-				{
-					current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-					current = current->next;
-					current->field = field_lines_[i].line[j];
-					current->next = nullptr;
-				}
+				list.add(field_lines_[i].line[j]);
 			}
 		}
 		if (count_lines == 3)
 		{
 			for (int k = 0; k < 3; ++k)
 			{
-				current->field = -1;
-				current = current->prev;
-			}
-			current = head;
-			while (current->next != nullptr)
-			{
-				current = current->next;
+				list.replace(list.length() - k, -1);
 			}
 		}
 	}
-	return head;
+	return list;
 }
 
-bool game::is_already_in(available_field_t *head, const int field)
+bool game::is_already_in(linked_list<int> list, const int field)
 {
-	if(head == nullptr)
+	if (list.is_empty())
 	{
 		return false;
 	}
-	available_field_t *current = head;
-	while(current!=nullptr)
-	{
-		if (current->field == field)
-		{
-			return true;
-		}
-		current = current->next;
-	}
-	return false;
+
+	return list.contains(field);
 }
 
 void game::print_removable_fields(const int player_id)
 {
-	available_field_t *head = get_removable_fields(player_id);
-	available_field_t *current = head;
-	if(head == nullptr)
+	linked_list<int> list = get_removable_fields(player_id);
+	if(list.is_empty())
 	{
 		printf("There's nothing to remove.\n");
 	}
 	else
 	{
 		printf("Remove one of the available:\n");
-		while (current != nullptr)
+		for(int i = 0; i < list.length(); ++i)
 		{
-			if (current->field == -1)
+			if(list[i] == -1)
 			{
-				current = current->next;
 				continue;
 			}
-			printf("%d ", current->field);
-			current = current->next;
-		
+			printf("%d ", list[i]);
 		}
 	}
 	putchar('\n');
@@ -723,22 +631,13 @@ void game::print_removable_fields(const int player_id)
 
 bool game::is_removable(const int field, const int player_id)
 {
-	available_field_t *head = get_removable_fields(player_id);
-	if (head == nullptr)
+	linked_list<int> list = get_removable_fields(player_id);
+	if (list.is_empty())
 	{
 		printf("There's nothing to remove.\n");
 		return false;
 	}
-	available_field_t *current = head;
-	while (current != nullptr)
-	{
-		if(current->field == field)
-		{
-			return true;
-		}
-		current = current->next;
-	}
-	return false;
+	return list.contains(field);
 }
 
 

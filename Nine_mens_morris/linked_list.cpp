@@ -75,7 +75,37 @@ T linked_list<T>::operator[](const int index)
 }
 
 template <class T>
-void linked_list<T>::print()
+int linked_list<T>::find_first(T value)
+{
+	node<int> *current = first;
+	int index = 0;
+	while(current != nullptr)
+	{
+		if(current->data == value)
+		{
+			return index;
+		}
+		++index;
+	}
+	return -1;
+}
+
+template <class T>
+void linked_list<T>::replace(int index, T value)
+{
+	node<int> *current = first;
+	int i = 0;
+	while(i <= index)
+	{
+		current = current->next;
+		++i;
+	}
+	current->data = value;
+}
+
+
+template <class T>
+void linked_list<T>::print() const
 {
 	node<T> *current = first;
 	while(current!=NULL)
@@ -100,4 +130,30 @@ bool linked_list<T>::contains(T value)
 	}
 	return false;
 }
+
+template <class T>
+int linked_list<T>::length()
+{
+	node<T> *current = first;
+	int i = 0;
+	while(current!=NULL)
+	{
+		++i;
+		current = current->next;
+	}
+	return i;
+}
+
+template <class T>
+bool linked_list<T>::is_empty()
+{
+	if(length() == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+
+
 
