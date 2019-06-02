@@ -1,5 +1,6 @@
 #pragma once
 #include "player.h"
+#include "linked_list.h"
 class gamer;
 
 typedef struct field{
@@ -10,6 +11,7 @@ typedef struct field{
 typedef struct field_line{
 	int line[3];
 	bool is_changed;
+	int id;
 }field_line_t;
 typedef struct available_field{
 	int field;
@@ -28,13 +30,13 @@ class game{
 	static void move(int player_id, int position);
 	static void print_available_for_position(int position);
 	static bool pick_field(int position, int player_id);
-	static available_field_t *get_available_fields();
-	static available_field_t *get_taken_fields(int player_id);
+	static  linked_list<int> get_available_fields();
+	static linked_list<int> get_taken_fields(int player_id);
 	static void print_taken_fields(int player_id);
 	static int select_position(int player_id);
 	static bool is_available(int field);
 	static void set_field(player &plr);
-	static available_field_t *get_available_for_position(int position);
+	static linked_list<int> get_available_for_position(int position);
 	static void play(player &player1, player &player2);
 	static bool is_taken_by_player(int player_id, int position);
 	static int count_lines(int player_id);
@@ -51,6 +53,7 @@ class game{
 	static void print_available();
 public:
 	game();
+	~game();
 	static void print_board();
 	void start_game();
 	

@@ -6,6 +6,7 @@ class player{
 	bool is_lost_;
 public:
 	player();
+	~player();
 	int get_pawn_number();
 	void set_pawn_number(int num);
 	int get_start_number();

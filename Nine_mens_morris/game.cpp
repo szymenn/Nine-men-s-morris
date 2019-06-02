@@ -3,6 +3,7 @@
 #include "player.h"
 #include <cstdlib>
 #include <iostream>
+#include "linked_list.cpp "
 
 field_t game::fields_[24];
 
@@ -43,66 +44,82 @@ field_line_t game::field_lines_[16] =
 	{
 		{0, 1, 2},
 		false,
+		-1
 	},
 	{
 		{0, 9, 21},
 		false,
+		-1
 	},	
 	{
 		{21, 22, 23},
 		false,
+		-1
 	},	
 	{
 		{2, 14, 23},
 		false,
+		-1
 	},	
 	{
 		{3, 4, 5},
 		false,
+		-1
 	},	
 	{
 		{3, 10, 18},
 		false,
+		-1
 	},	
 	{
 		{18, 19, 20},
 		false,
+		-1
 	},	
 	{
 		{5, 13, 20},
 		false,
+		-1
 	},	
 	{
 		{6, 7, 8},
 		false,
+		-1
 	},	
 	{
 		{6, 11, 15},
 		false,
+		-1
 	},	
 	{
 		{15, 16, 17},
 		false,
+		-1
 	},	
 	{
 		{8, 12, 17},
 		false,
+		-1
 	},
 	{
 		{1, 4, 7},
 		false,
+		-1
 	},
 	{
 		{9, 10, 11},
 		false,
+		-1
 	},
 	{
 		{16, 19, 22},
 		false,
+		-1
 	},
 	{
 		{12, 13, 14},
 		false,
+		-1
 	},
 };
 
@@ -114,6 +131,10 @@ game::game()
 		fields_[i].id = -1;
 	}
 }
+
+game::~game()
+= default;
+
 
 void game::print_board()
 {
@@ -149,65 +170,41 @@ void game::draw_color(player &player1, player &player2)
 
 void game::move(const int player_id, const int position)
 {
-	available_field_t *head = get_available_for_position(position);
-	if(head == nullptr)
-	{
-		printf("Pick another position.\n");
-		return;
-	}
-	print_available_for_position(position);
+	linked_list<int> list = get_available_for_position(position);
+	list.print();
 	while (!pick_field(position, player_id));
 }
 
 void game::print_available_for_position(const int position)
 {
-	available_field_t *head = get_available_for_position(position);
-	if(head == nullptr)
-	{
-		printf("None.");
-	}
-	else
-	{
-		available_field_t *current = head;
-		while(current!=nullptr)
-		{
-			printf("%d ", current->field);
-			current = current->next;
-		}
-	}
-	putchar('\n');
+	linked_list<int> list = get_available_for_position(position);
+	list.print();
 }
 
 bool game::pick_field(const int position, const int player_id)
 {
 	printf("Pick field: ");
 	int field;
-	if(scanf_s("%d", &field)!=1)
+	while(scanf_s("%d", &field)!=1 || is_available(field) || getchar()!='\n')
 	{
-		printf("Not available.\n");
-		return false;
+		printf("Not available. Pick again:\n");
+		while (getchar() != '\n');
 	}
-	available_field_t *head = get_available_for_position(position);
-	available_field_t *current = head;
-	while (current!=nullptr)
+	linked_list<int> list = get_available_for_position(position);
+	if(list.contains(field))
 	{
-		if(current->field == field)
-		{
-			fields_[position].id = -1;
-			fields_[position].is_taken = false;
-			fields_[field].is_taken = true;
-			fields_[field].id = player_id;
-			return true;
-		}
-		current = current->next;
+		fields_[position].id = -1;
+		fields_[position].is_taken = false;
+		fields_[field].is_taken = true;
+		fields_[field].id = player_id;
+		return true;
 	}
 	return false;
 }
 
-available_field_t* game::get_available_for_position(const int position)
+linked_list<int> game::get_available_for_position(const int position)
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for (int i = 0; i < 4; ++i)
 	{
 		if (field_moves_[position][i] == -1)
@@ -216,39 +213,17 @@ available_field_t* game::get_available_for_position(const int position)
 		}
 		if (is_available(field_moves_[position][i]))
 		{
-			if (head == nullptr)
-			{
-				head = (available_field_t *)malloc(sizeof(available_field_t*));
-				head->field = field_moves_[position][i];
-				current = head;
-				current->next = nullptr;
-			}
-			else
-			{
-				current->next = (available_field_t *)malloc(sizeof(available_field_t*));
-				current = current->next;
-				current->field = field_moves_[position][i];
-				current->next = nullptr;
-			}
+			list.add(field_moves_[position][i]);
 		}
 	}
-	return head;
+	return list;
 }
 
 
 bool game::is_available(const int field)
 {
-	available_field_t *head = get_available_fields();
-	available_field_t *current = head;
-	while(current != nullptr)
-	{
-		if(current->field == field)
-		{
-			return true;
-		}
-		current = current->next;
-	}
-	return false;
+	linked_list<int> list = get_available_fields();
+	return list.contains(field);
 }
 
 
@@ -281,88 +256,43 @@ bool game::is_ended(player& player1, player& player2)
 	return false;
 }
 
-available_field_t* game::get_available_fields()
+linked_list<int> game::get_available_fields()
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for(int i = 0; i < 24; i++)
 	{
-		if(!fields_[i].is_taken && head == nullptr)
+		if(!fields_[i].is_taken)
 		{
-			head = (available_field_t*)(malloc(sizeof(available_field_t*)));
-			head->field = i;
-			current = head;
-			current->next = nullptr;
-		}
-		else if(!fields_[i].is_taken)
-		{
-			current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-			current->next->field = i;
-			current = current->next;
-			current->next = nullptr;
+			list.add(i);
 		}
 	}
-	return head;
+	return list;
 }
 
-available_field_t* game::get_taken_fields(int player_id)
+linked_list<int> game::get_taken_fields(int player_id)
 {
-	available_field_t *head = nullptr;
-	available_field_t *current = nullptr;
+	linked_list<int> list;
 	for (int i = 0; i < 24; i++)
 	{
 		if(fields_[i].is_taken && fields_[i].id == player_id)
 		{
-			if (head == nullptr)
-			{
-				head = (available_field_t*)malloc(sizeof(available_field_t*));
-				current = head;
-				current->field = i;
-				current->next = nullptr;
-			}
-			else 			
-			{
-				current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-				current = current->next;
-				current->field = i;
-				current->next = nullptr;
-			}
-
+			list.add(i);
 		}
 	}
-	return head;
+	return list;
 }
 
 void game::print_taken_fields(int player_id)
 {
-	available_field_t *head = get_taken_fields(player_id);
-	if(head == nullptr)
-	{
-		printf("There's no fields taken by your pawns.\n");
-		return;
-	}
-	available_field_t *current = head;
+	linked_list<int> list = get_taken_fields(player_id);
 	printf("Your pawns are placed:\n");
-	while(current!=nullptr)
-	{
-		printf("%d ", current->field);
-		current = current->next;
-	}
+	list.print();
 }
 
 bool game::is_taken_by_player(const int player_id, int position)
 {
-	available_field_t *head = get_taken_fields(player_id);
-	available_field_t *current = head;
-	while(current!=nullptr)
-	{
-		if(position == current->field)
-		{
-			return true;
-		}
-		current = current->next;
-	}
-	return false;
+	linked_list<int> list = get_taken_fields(player_id);
+	return list.contains(position);
 }
 
 
@@ -382,34 +312,17 @@ int game::select_position(const int player_id)
 void game::set_field(player &plr)
 {
 	int position;
-	available_field_t *current = get_available_fields();
+	linked_list<int> list = get_available_fields();
 	printf("Available fields:\n");
-	while(current!=nullptr)
-	{
-		printf("%d ", current->field);
-		current = current->next;
-	}
-	putchar('\n');
+	list.print();
 	printf("Pick a field: ");
 	while (scanf_s("%d", &position) != 1 || !is_available(position) || !set_pawn(plr, position) || getchar() != '\n')
 	{
 		printf("Error, Field should be one of the following:\n");
-		print_available();
+		list.print();
 		while (getchar() != '\n');
 	}
 }
-
-void game::print_available()
-{
-	available_field_t *current = get_available_fields();
-	while(current != nullptr)
-	{
-		printf("%d ", current->field);
-		current = current->next;
-	}
-	putchar('\n');
-}
-
 
 void game::play(player& player1, player& player2)
 {
@@ -554,6 +467,7 @@ void game::check_lines(const int player_id, available_field_t* head)
 		while (current != nullptr)
 		{
 			field_lines_[current->field].is_changed = false;
+			field_lines_[current->field].id = -1;
 			current = current->next;
 		}
 	}
@@ -565,41 +479,36 @@ void game::check_lines(const int player_id, available_field_t* head)
 			if (!contains(head_temp, current->field))
 			{
 				field_lines_[current->field].is_changed = false;
+				field_lines_[current->field].id = -1;
 			}
 			current = current->next;
 		}
 	}
 }
 
-available_field_t* game::get_taken_lines(int player_id)
+available_field_t* game::get_taken_lines(const int player_id)
 {
 	available_field_t *head = nullptr;
 	available_field_t *current = nullptr;
 	for (int i = 0; i < 16; ++i)
 	{
 		int count_lines = 0;
-		for (int j = 0; j < 3; ++j)
+		if(field_lines_[i].id == player_id)
 		{
-			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && field_lines_[i].is_changed)
-			{
-				++count_lines;
-			}
-		}
-		if (count_lines == 3)
-		{
-			if (head == nullptr)
+			if(head == nullptr)
 			{
 				head = (available_field_t*)malloc(sizeof(available_field_t*));
 				current = head;
 				current->field = i;
 				current->next = nullptr;
 			}
-			else
+			else 
 			{
-				current->next = (available_field_t*)malloc(sizeof(available_field_t*));
+				current->next = (available_field*)malloc(sizeof(available_field_t*));
 				current = current->next;
 				current->field = i;
 				current->next = nullptr;
+				
 			}
 		}
 	}
@@ -640,6 +549,8 @@ int game::count_lines(const int player_id)
 	return count;
 }
 
+
+
 available_field_t* game::get_lines(const int player_id)
 {
 	available_field_t *head = nullptr;
@@ -661,6 +572,7 @@ available_field_t* game::get_lines(const int player_id)
 				head = (available_field_t*)malloc(sizeof(available_field_t*));
 				current = head;
 				current->field = i;
+				field_lines_[i].id = player_id;
 				current->next = nullptr;
 			}
 			else
@@ -668,6 +580,7 @@ available_field_t* game::get_lines(const int player_id)
 				current->next = (available_field_t*)malloc(sizeof(available_field_t*));
 				current = current->next;
 				current->field = i;
+				field_lines_[i].id = player_id;
 				current->next = nullptr;
 			}
 		}
@@ -712,36 +625,50 @@ available_field_t* game::get_removable_fields(const int player_id)
 		int count_lines = 0;
 		for (int j = 0; j < 3; ++j)
 		{
-			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(head, field_lines_[i].line[j]))
+			if (field_lines_[i].id == player_id)
 			{
-				if(head == nullptr)
+				if (head == nullptr)
 				{
 					head = (available_field_t*)malloc(sizeof(available_field_t*));
 					current = head;
+					current->field = -1;
 					current->next = nullptr;
-					current->prev = nullptr;
 				}
 				else
 				{
 					current->next = (available_field_t*)malloc(sizeof(available_field_t*));
-					available_field_t* temp = current;
 					current = current->next;
+					current->field = -1;
 					current->next = nullptr;
-					current->prev = temp;
 				}
-				current->field = field_lines_[i].line[j];
-				++count_lines;
+			}
+			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(head, field_lines_[i].line[j]))
+			{
+				if (head == nullptr)
+				{
+					head = (available_field_t*)malloc(sizeof(available_field_t*));
+					current = head;
+					current->field = field_lines_[i].line[j];
+					current->next = nullptr;
+				}
+				else
+				{
+					current->next = (available_field_t*)malloc(sizeof(available_field_t*));
+					current = current->next;
+					current->field = field_lines_[i].line[j];
+					current->next = nullptr;
+				}
 			}
 		}
 		if (count_lines == 3)
 		{
-			for(int k = 0; k < 3; ++k)
+			for (int k = 0; k < 3; ++k)
 			{
 				current->field = -1;
 				current = current->prev;
 			}
 			current = head;
-			while(current->next!=nullptr)
+			while (current->next != nullptr)
 			{
 				current = current->next;
 			}
@@ -779,15 +706,16 @@ void game::print_removable_fields(const int player_id)
 	else
 	{
 		printf("Remove one of the available:\n");
-		while(current!=nullptr)
+		while (current != nullptr)
 		{
-			if(current->field == -1)
+			if (current->field == -1)
 			{
 				current = current->next;
 				continue;
 			}
 			printf("%d ", current->field);
 			current = current->next;
+		
 		}
 	}
 	putchar('\n');

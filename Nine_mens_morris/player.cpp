@@ -42,5 +42,8 @@ void player::set_start_number(int num)
 	start_number_ = num;
 }
 
+player::~player()
+= default;
+
 
 

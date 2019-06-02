@@ -119,10 +119,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="linked_list.h" />
     <ClInclude Include="player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="linked_list.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
