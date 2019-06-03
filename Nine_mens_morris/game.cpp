@@ -133,6 +133,7 @@ game::game()
 		fields_[i].is_taken = false;
 		fields_[i].id = -1;
 	}
+	log("New game.\n");
 }
 
 game::~game()
