@@ -10,8 +10,6 @@
 
 field_t game::fields_[24];
 
-
-
 linked_list<int> game::list_player_1_;
 
 linked_list<int> game::list_player_2_;
@@ -140,14 +138,6 @@ game::game()
 game::~game()
 = default;
 
-
-void game::print_board()
-{
-	printf("0 ------- 1 ------- 2\n|         |         |\n|  3 ---- 4 ---- 5  |\n|  |      |      |  |\n");
-	printf("|  |  6-- 7 --8  |  |\n|  |  |       |  |  |\n9--10-11      12-13-14\n|  |  |       |  |  |\n");
-	printf("|  |  15-16- 17  |  |\n|  |      |      |  |\n|  18---- 19 ---20  |\n|         |         |\n");
-	printf("21------ 22 -------23\n");
-}
 
 void game::start_game()
 {
@@ -694,7 +684,6 @@ void game::log(const std::string log_info)
 		<< " " << current.tm_hour << ":" << current.tm_min << ":" << current.tm_sec << " " << log_info;
 	logger.close();
 }
-
 
 
 
