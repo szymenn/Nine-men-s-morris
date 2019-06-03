@@ -150,14 +150,7 @@ bool linked_list<T>::contains(T value)
 template <class T>
 int linked_list<T>::length() const
 {
-	node<T> *current = first;
-	int i = 0;
-	while(current!= nullptr)
-	{
-		++i;
-		current = current->next;
-	}
-	return i;
+	return size_;
 }
 
 template <class T>

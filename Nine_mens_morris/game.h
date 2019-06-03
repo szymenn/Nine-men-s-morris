@@ -51,6 +51,7 @@ class game{
 	static bool is_removable(int field, int player_id);
 	static void check_lines(int player_id, linked_list<int> &list);
 	static linked_list<int> get_taken_lines(int player_id);
+	static void check_is_ended(player &plr);
 public:
 	game();
 	~game();

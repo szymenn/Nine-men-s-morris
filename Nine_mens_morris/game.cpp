@@ -245,6 +245,8 @@ bool game::set_pawn(player &plr, const int position)
 
 bool game::is_ended(player& player1, player& player2)
 {
+	check_is_ended(player1);
+	check_is_ended(player2);
 	if (!player1.get_is_lost())
 	{
 		printf("first player loses the game.\n");
@@ -519,8 +521,6 @@ int game::count_lines(const int player_id)
 	return count;
 }
 
-
-
 linked_list<int> game::get_lines(const int player_id)
 {
 	linked_list<int> list;
@@ -572,14 +572,16 @@ void game::remove(player &plr)
 linked_list<int> game::get_removable_fields(const int player_id)
 {
 	linked_list<int> list;
+	linked_list<int> temp_list;
 	for (int i = 0; i < 16; ++i)
 	{
 		int count_lines = 0;
 		for (int j = 0; j < 3; ++j)
 		{
-			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(list, field_lines_[i].line[j]))
+			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(temp_list, field_lines_[i].line[j]))
 			{
 				list.add(field_lines_[i].line[j]);
+				temp_list.add(field_lines_[i].line[j]);
 				++count_lines;
 			}
 		}
@@ -633,7 +635,30 @@ bool game::is_removable(const int field, const int player_id)
 	return list.contains(field);
 }
 
+void game::check_is_ended(player &plr)
+{
+	if(plr.get_pawn_number() < 3)
+	{
+		plr.set_is_lost(true);
+		return;
+	}
 
+	int count = 0;
+	linked_list<int> list_taken = get_taken_fields(plr.get_id());
+	for(int i = 0; i < list_taken.length(); ++i)
+	{
+		linked_list<int> list_available = get_available_for_position(list_taken[i]);
+		if(!list_available.is_empty())
+		{
+			++count;
+		}
+	}
+	if(count == 0)
+	{
+		plr.set_is_lost(true);
+	}
+
+}
 
 
 
