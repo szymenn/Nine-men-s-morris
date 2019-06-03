@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
 	list.pop();
 	list.pop();
 	list.print();
+
 	game game1;
 	game::print_board();
 	game1.start_game();

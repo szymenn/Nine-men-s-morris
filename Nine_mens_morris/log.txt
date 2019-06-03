@@ -1,0 +1,12 @@
+2019-6-3 17:18:25 Second player selects field.
+2019-6-3 17:21:11 First player selects field.
+2019-6-3 17:21:11 Second player selects field.
+2019-6-3 17:21:13 First player selects field.
+2019-6-3 17:21:14 Second player selects field.
+2019-6-3 17:21:14 First player selects field.
+2019-6-3 17:21:15 Removing second player pawn.
+2019-6-3 17:21:17 Second player selects field.
+2019-6-3 17:21:18 First player selects field.
+2019-6-3 17:21:19 Second player selects field.
+2019-6-3 17:21:20 Removing first player pawn.
+2019-6-3 17:21:22 First player selects field.

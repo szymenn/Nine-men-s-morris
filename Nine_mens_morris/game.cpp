@@ -4,6 +4,9 @@
 #include <cstdlib>
 #include <iostream>
 #include "linked_list.cpp "
+#include <time.h>
+#include <fstream>
+#include <string>
 
 field_t game::fields_[24];
 
@@ -250,11 +253,13 @@ bool game::is_ended(player& player1, player& player2)
 	if (!player1.get_is_lost())
 	{
 		printf("first player loses the game.\n");
+		log("Game over, first player loses the game.\n");
 		return true;
 	}
 	if (!player2.get_is_lost())
 	{
 		printf("second player loses the game.\n");
+		log("Game over, second player loses the game.\n");
 		return true;
 	}
 	return false;
@@ -339,11 +344,13 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
+				log("First player moves.\n");
 				check_lines(player1.get_id(), list_player_1_);
 				temp_list = get_lines(player1.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
 				}
 				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
@@ -351,12 +358,14 @@ void game::play(player& player1, player& player2)
 					break;
 				}
 				move(player2.get_id(), select_position(player2.get_id()));
+				log("Second player moves.\n");
 				check_lines(player2.get_id(), list_player_2_);
 				temp_list = get_lines(player2.get_id());
 				printf("Black pawns turn:\n"); 
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player1);
+					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
@@ -368,11 +377,13 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				move(player2.get_id(), select_position(player2.get_id()));
+				log("Second player moves.\n");
 				check_lines(player2.get_id(), list_player_2_);
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player1);
+					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
@@ -381,11 +392,13 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				move(player1.get_id(), select_position(player1.get_id()));
+				log("First player moves.\n");
 				check_lines(player1.get_id(), list_player_1_);
 				temp_list = get_lines(player1.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
 				}
 				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
@@ -400,11 +413,13 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player1);
+				log("First player selects field.\n");
 				check_lines(player1.get_id(), list_player_1_);
 				temp_list = get_lines(player1.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
 				}
 				list_player_1_ = temp_list;
 				if (is_ended(player1, player2))
@@ -413,11 +428,13 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				set_field(player2);
+				log("Second player selects field.\n");
 				check_lines(player2.get_id(), list_player_2_);
 				temp_list = get_lines(player2.get_id());
 				if(!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player1);
+					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
@@ -429,11 +446,13 @@ void game::play(player& player1, player& player2)
 			{
 				printf("White pawns turn:\n");
 				set_field(player2);
+				log("Second player selects field.\n");
 				check_lines(player2.get_id(), list_player_2_);
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player1);
+					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
 				if(is_ended(player1, player2))
@@ -442,11 +461,13 @@ void game::play(player& player1, player& player2)
 				}
 				printf("Black pawns turn:\n");
 				set_field(player1);
+				log("First player select field.\n");
 				check_lines(player1.get_id(), list_player_1_);
 				temp_list = get_lines(player1.get_id());
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
 				}
 				list_player_1_ = temp_list;
 				if(is_ended(player1, player2))
@@ -659,6 +680,21 @@ void game::check_is_ended(player &plr)
 	}
 
 }
+
+void game::log(const std::string log_info)
+{
+	std::ofstream logger;
+	logger.open("log.txt", std::ofstream::out | std::ofstream::app);
+	struct tm current;
+	time_t currentTime;
+	time(&currentTime);
+	localtime_s(&current, &currentTime);
+	logger << current.tm_year + 1900 << "-"
+		<< current.tm_mon + 1 << "-" << current.tm_mday
+		<< " " << current.tm_hour << ":" << current.tm_min << ":" << current.tm_sec << " " << log_info;
+	logger.close();
+}
+
 
 
 

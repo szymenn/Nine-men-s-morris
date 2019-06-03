@@ -52,6 +52,7 @@ class game{
 	static void check_lines(int player_id, linked_list<int> &list);
 	static linked_list<int> get_taken_lines(int player_id);
 	static void check_is_ended(player &plr);
+	static void log(std::string log_info);
 public:
 	game();
 	~game();
