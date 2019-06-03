@@ -3,24 +3,26 @@
 template<class T>
 struct node {
 	node<T>* next;
+	node<T> *prev;
 	T data;
 };
 
 template<class T>
 class linked_list
 {
+	int size_;
 public:
 	node<T>* first;
 	node<T>* last;
 	linked_list<T>();
-	~linked_list<T>();
 	void add(T data);
-	T get(const int index);
+	T get(int index);
 	int find_first(T value);
 	void print() const;
 	bool contains(T value);
 	T operator[](int index);
-	void replace(int index, T value);
-	int length();
+	void pop();
+	int length() const;
 	bool is_empty();
+	void remove_internal(node<T>* pos);
 };

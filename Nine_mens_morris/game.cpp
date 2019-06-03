@@ -351,7 +351,7 @@ void game::play(player& player1, player& player2)
 				move(player2.get_id(), select_position(player2.get_id()));
 				check_lines(player2.get_id(), list_player_2_);
 				temp_list = get_lines(player2.get_id());
-				printf("Black pawns turn:\n");
+				printf("Black pawns turn:\n"); 
 				if (!temp_list.is_empty())
 				{
 					remove_op_pawn(temp_list, player1);
@@ -577,20 +577,17 @@ linked_list<int> game::get_removable_fields(const int player_id)
 		int count_lines = 0;
 		for (int j = 0; j < 3; ++j)
 		{
-			if (field_lines_[i].id == player_id)
-			{
-				list.add(-1);
-			}
 			if (fields_[field_lines_[i].line[j]].is_taken && fields_[field_lines_[i].line[j]].id == player_id && !is_already_in(list, field_lines_[i].line[j]))
 			{
 				list.add(field_lines_[i].line[j]);
+				++count_lines;
 			}
 		}
-		if (count_lines == 3)
+		if (count_lines >= 3)
 		{
-			for (int k = 0; k < 3; ++k)
+			for (int j = 0; j < 3; ++j)
 			{
-				list.replace(list.length() - k, -1);
+				list.pop();
 			}
 		}
 	}
@@ -617,12 +614,8 @@ void game::print_removable_fields(const int player_id)
 	else
 	{
 		printf("Remove one of the available:\n");
-		for(int i = 0; i < list.length(); ++i)
+		for (int i = 0; i < list.length(); ++i)
 		{
-			if(list[i] == -1)
-			{
-				continue;
-			}
 			printf("%d ", list[i]);
 		}
 	}

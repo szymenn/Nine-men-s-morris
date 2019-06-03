@@ -5,12 +5,8 @@ linked_list<T>::linked_list()
 {
 	first = NULL;
 	last = NULL;
+	size_ = 0;
 }
-
-template <class T>
-linked_list<T>::~linked_list()
-= default;
-
 
 template <class T>
 void linked_list<T>::add(T data)
@@ -19,6 +15,7 @@ void linked_list<T>::add(T data)
 		first = new node<T>;
 		first->data = data;
 		first->next = NULL;
+		first->prev = NULL;
 		last = first;
 	}
 	else {
@@ -26,16 +23,19 @@ void linked_list<T>::add(T data)
 			last = new node<T>;
 			last->data = data;
 			last->next = NULL;
+			last->prev = first;
 			first->next = last;
 		}
 		else {
 			node<T>* ins_data = new node<T>;
 			ins_data->data = data;
 			ins_data->next = NULL;
+			ins_data->prev = last;
 			last->next = ins_data;
 			last = ins_data;
 		}
 	}
+	size_++;
 }
 
 //template <class T>
@@ -91,16 +91,32 @@ int linked_list<T>::find_first(T value)
 }
 
 template <class T>
-void linked_list<T>::replace(int index, T value)
+void linked_list<T>::pop()
 {
-	node<int> *current = first;
-	int i = 0;
-	while(i <= index)
+	remove_internal(last);
+}
+
+template <class T>
+void linked_list<T>::remove_internal(node<T>* pos)
+{
+	if (pos)
 	{
-		current = current->next;
-		++i;
+		if (pos->prev)
+			pos->prev->next = pos->next;
+
+		if (pos->next)
+			pos->next->prev = pos->prev;
+
+		if (pos == first)
+			first = pos->next;
+
+		if (pos == last)
+			last = pos->prev;
+
+		delete pos;
+
+		size_--;
 	}
-	current->data = value;
 }
 
 
@@ -108,7 +124,7 @@ template <class T>
 void linked_list<T>::print() const
 {
 	node<T> *current = first;
-	while(current!=NULL)
+	while(current != nullptr)
 	{
 		std::cout << current->data<< " ";
 		current = current->next;
@@ -120,7 +136,7 @@ template <class T>
 bool linked_list<T>::contains(T value)
 {
 	node<T> *current = first;
-	while(current!=NULL)
+	while(current!= nullptr)
 	{
 		if(current->data == value)
 		{
@@ -132,11 +148,11 @@ bool linked_list<T>::contains(T value)
 }
 
 template <class T>
-int linked_list<T>::length()
+int linked_list<T>::length() const
 {
 	node<T> *current = first;
 	int i = 0;
-	while(current!=NULL)
+	while(current!= nullptr)
 	{
 		++i;
 		current = current->next;
