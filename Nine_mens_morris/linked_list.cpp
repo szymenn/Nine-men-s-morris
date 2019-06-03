@@ -3,64 +3,49 @@
 template <class T>
 linked_list<T>::linked_list()
 {
-	first = NULL;
-	last = NULL;
+	head = NULL;
+	tail = NULL;
 	size_ = 0;
 }
 
 template <class T>
 void linked_list<T>::add(T data)
 {
-	if (!first) {
-		first = new node<T>;
-		first->data = data;
-		first->next = NULL;
-		first->prev = NULL;
-		last = first;
+	if (!head) {
+		head = new node<T>;
+		head->data = data;
+		head->next = NULL;
+		head->prev = NULL;
+		tail = head;
 	}
 	else {
-		if (last == first) {
-			last = new node<T>;
-			last->data = data;
-			last->next = NULL;
-			last->prev = first;
-			first->next = last;
+		if (tail == head) {
+			tail = new node<T>;
+			tail->data = data;
+			tail->next = NULL;
+			tail->prev = head;
+			head->next = tail;
 		}
 		else {
 			node<T>* ins_data = new node<T>;
 			ins_data->data = data;
 			ins_data->next = NULL;
-			ins_data->prev = last;
-			last->next = ins_data;
-			last = ins_data;
+			ins_data->prev = tail;
+			tail->next = ins_data;
+			tail = ins_data;
 		}
 	}
 	size_++;
 }
-
-//template <class T>
-//T linked_list<T>::find(T data)
-//{
-//	node<T> *current = first;
-//	while(current!=NULL)
-//	{
-//		if(current->data == data)
-//		{
-//			return 
-//		}
-//	}
-//
-//}
-
 
 template <class T>
 T linked_list<T>::get(const int index)
 {
 	if (index == 0)
 	{
-		return this->first->data;
+		return this->head->data;
 	}
-	node<T>* current = this->first;
+	node<T>* current = this->head;
 	for (int i = 0; i < index; ++i)
 	{
 		current = current->next;
@@ -77,7 +62,7 @@ T linked_list<T>::operator[](const int index)
 template <class T>
 int linked_list<T>::find_first(T value)
 {
-	node<int> *current = first;
+	node<int> *current = head;
 	int index = 0;
 	while(current != nullptr)
 	{
@@ -93,7 +78,7 @@ int linked_list<T>::find_first(T value)
 template <class T>
 void linked_list<T>::pop()
 {
-	remove_internal(last);
+	remove_internal(tail);
 }
 
 template <class T>
@@ -107,11 +92,11 @@ void linked_list<T>::remove_internal(node<T>* pos)
 		if (pos->next)
 			pos->next->prev = pos->prev;
 
-		if (pos == first)
-			first = pos->next;
+		if (pos == head)
+			head = pos->next;
 
-		if (pos == last)
-			last = pos->prev;
+		if (pos == tail)
+			tail = pos->prev;
 
 		delete pos;
 
@@ -123,7 +108,7 @@ void linked_list<T>::remove_internal(node<T>* pos)
 template <class T>
 void linked_list<T>::print() const
 {
-	node<T> *current = first;
+	node<T> *current = head;
 	while(current != nullptr)
 	{
 		std::cout << current->data<< " ";
@@ -135,7 +120,7 @@ void linked_list<T>::print() const
 template <class T>
 bool linked_list<T>::contains(T value)
 {
-	node<T> *current = first;
+	node<T> *current = head;
 	while(current!= nullptr)
 	{
 		if(current->data == value)

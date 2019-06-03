@@ -12,8 +12,8 @@ class linked_list
 {
 	int size_;
 public:
-	node<T>* first;
-	node<T>* last;
+	node<T>* head;
+	node<T>* tail;
 	linked_list<T>();
 	void add(T data);
 	T get(int index);
