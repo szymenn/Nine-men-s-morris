@@ -166,6 +166,11 @@ void game::draw_color(player &player1, player &player2)
 void game::move(const int player_id, const int position)
 {
 	linked_list<int> list = get_available_for_position(position);
+	while(list.is_empty())
+	{
+		printf("There's none available positions to move for this position.\n");
+	}
+	printf("List of available positions to move:\n");
 	list.print();
 	while (!pick_field(position, player_id));
 }
@@ -180,7 +185,7 @@ bool game::pick_field(const int position, const int player_id)
 {
 	printf("Pick field: ");
 	int field;
-	while(scanf_s("%d", &field)!=1 || is_available(field) || getchar()!='\n')
+	while(scanf_s("%d", &field)!=1 || !is_available(field) || getchar()!='\n')
 	{
 		printf("Not available. Pick again:\n");
 		while (getchar() != '\n');
@@ -284,8 +289,16 @@ linked_list<int> game::get_taken_fields(int player_id)
 void game::print_taken_fields(int player_id)
 {
 	linked_list<int> list = get_taken_fields(player_id);
-	printf("Your pawns are placed:\n");
-	list.print();
+	printf("You can move one of those pawns:\n");
+	linked_list<int> temp_list;
+	for (int i = 0; i < list.length(); ++i)
+	{
+		temp_list = get_available_for_position(list[i]);
+		if (!temp_list.is_empty())
+		{
+			printf("%d ", list[i]);
+		}
+	}
 }
 
 bool game::is_taken_by_player(const int player_id, const int position)
@@ -299,6 +312,7 @@ int game::select_position(const int player_id)
 {
 	printf("Please select one of your pawns to move:\n");
 	print_taken_fields(player_id);
+	putchar('\n');
 	int position;
 	while(scanf_s("%d", &position)!=1 || !is_taken_by_player(player_id, position) || getchar()!='\n')
 	{
