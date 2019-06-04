@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[])
 {
-	srand(time(0));
+	srand(time(nullptr));
 	linked_list<int> list;
 	list.add(5);
 	list.add(6);

@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_automated.h" />
     <ClInclude Include="game_base.h" />
     <ClInclude Include="linked_list.h" />
     <ClInclude Include="player.h" />
