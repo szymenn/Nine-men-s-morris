@@ -410,7 +410,14 @@ void game_base::log(std::string log_info)
 
 void game_base::move(int player_id, int position)
 {
-	
+	linked_list<int> list = get_available_for_position(position);
+	while (list.is_empty())
+	{
+		printf("There's none available positions to move for this position.\n");
+	}
+	printf("List of available positions to move:\n");
+	list.print();
+	while (!pick_field(position, player_id));
 }
 
 bool game_base::pick_field(int position, int player_id)

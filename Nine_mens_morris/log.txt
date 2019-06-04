@@ -122,3 +122,180 @@
 2019-6-4 13:18:8 First player moves.
 2019-6-4 13:18:12 Second player moves.
 2019-6-4 13:18:16 First player moves.
+2019-6-5 0:36:4 New game.
+2019-6-5 0:37:15 First player selects field.
+2019-6-5 0:37:15 Second player selects field.
+2019-6-5 0:37:20 First player selects field.
+2019-6-5 0:37:20 Second player selects field.
+2019-6-5 0:37:25 First player selects field.
+2019-6-5 0:37:25 Second player selects field.
+2019-6-5 0:37:28 First player selects field.
+2019-6-5 0:37:28 Second player selects field.
+2019-6-5 0:37:31 First player selects field.
+2019-6-5 0:37:31 Second player selects field.
+2019-6-5 0:37:33 First player selects field.
+2019-6-5 0:37:33 Second player selects field.
+2019-6-5 0:37:34 First player selects field.
+2019-6-5 0:37:34 Second player selects field.
+2019-6-5 0:37:36 First player selects field.
+2019-6-5 0:37:36 Second player selects field.
+2019-6-5 0:37:37 First player selects field.
+2019-6-5 0:37:37 Removing second player pawn.
+2019-6-5 0:37:37 Second player selects field.
+2019-6-5 0:37:52 Second player selects field.
+2019-6-5 0:37:54 First player select field.
+2019-6-5 0:37:54 Second player selects field.
+2019-6-5 0:37:56 First player select field.
+2019-6-5 0:37:56 Second player selects field.
+2019-6-5 0:37:58 First player select field.
+2019-6-5 0:37:58 Second player selects field.
+2019-6-5 0:38:0 First player select field.
+2019-6-5 0:38:0 Second player selects field.
+2019-6-5 0:38:1 First player select field.
+2019-6-5 0:38:1 Removing second player pawn.
+2019-6-5 0:38:1 Second player selects field.
+2019-6-5 0:38:3 First player select field.
+2019-6-5 0:38:3 Second player selects field.
+2019-6-5 0:38:4 First player select field.
+2019-6-5 0:38:4 Removing second player pawn.
+2019-6-5 0:38:4 Second player selects field.
+2019-6-5 0:38:6 First player select field.
+2019-6-5 0:38:6 Second player selects field.
+2019-6-5 0:38:6 Removing first player pawn.
+2019-6-5 0:38:12 First player select field.
+2019-6-5 0:38:12 Removing second player pawn.
+2019-6-5 0:40:23 First player selects field.
+2019-6-5 0:40:23 Second player selects field.
+2019-6-5 0:40:24 First player selects field.
+2019-6-5 0:40:24 Second player selects field.
+2019-6-5 0:40:29 First player selects field.
+2019-6-5 0:40:29 Second player selects field.
+2019-6-5 0:40:33 First player selects field.
+2019-6-5 0:40:33 Second player selects field.
+2019-6-5 0:40:36 First player selects field.
+2019-6-5 0:40:36 Second player selects field.
+2019-6-5 0:40:36 Removing first player pawn.
+2019-6-5 0:41:31 First player selects field.
+2019-6-5 0:41:31 Second player selects field.
+2019-6-5 0:41:31 Removing first player pawn.
+2019-6-5 0:41:40 First player selects field.
+2019-6-5 0:41:40 Second player selects field.
+2019-6-5 0:41:40 Removing first player pawn.
+2019-6-5 0:45:53 First player selects field.
+2019-6-5 0:45:53 Second player selects field.
+2019-6-5 0:45:55 First player selects field.
+2019-6-5 0:45:55 Second player selects field.
+2019-6-5 0:45:58 First player selects field.
+2019-6-5 0:45:58 Second player selects field.
+2019-6-5 0:46:0 First player selects field.
+2019-6-5 0:46:0 Second player selects field.
+2019-6-5 0:46:3 First player selects field.
+2019-6-5 0:46:3 Second player selects field.
+2019-6-5 0:46:3 First player selects field.
+2019-6-5 0:46:3 Second player selects field.
+2019-6-5 0:46:3 Removing first player pawn.
+2019-6-5 0:46:5 First player selects field.
+2019-6-5 0:46:5 Second player selects field.
+2019-6-5 0:46:5 Removing first player pawn.
+2019-6-5 0:46:55 First player selects field.
+2019-6-5 0:46:55 Second player selects field.
+2019-6-5 0:46:56 First player selects field.
+2019-6-5 0:46:56 Second player selects field.
+2019-6-5 0:46:56 First player selects field.
+2019-6-5 0:46:56 Second player selects field.
+2019-6-5 0:46:57 First player selects field.
+2019-6-5 0:46:57 Second player selects field.
+2019-6-5 0:46:57 First player selects field.
+2019-6-5 0:47:3 Removing second player pawn.
+2019-6-5 0:47:3 Second player selects field.
+2019-6-5 0:47:7 First player selects field.
+2019-6-5 0:47:7 Second player selects field.
+2019-6-5 0:47:9 First player selects field.
+2019-6-5 0:47:9 Second player selects field.
+2019-6-5 0:47:10 First player selects field.
+2019-6-5 0:47:14 Removing second player pawn.
+2019-6-5 0:47:14 Second player selects field.
+2019-6-5 0:47:18 First player selects field.
+2019-6-5 0:47:18 Second player selects field.
+2019-6-5 0:49:23 New game.
+2019-6-5 0:49:24 Second player selects field.
+2019-6-5 0:49:25 First player select field.
+2019-6-5 0:49:26 Second player selects field.
+2019-6-5 0:49:26 First player select field.
+2019-6-5 0:49:27 Second player selects field.
+2019-6-5 0:49:29 First player select field.
+2019-6-5 0:49:31 Second player selects field.
+2019-6-5 0:49:32 First player select field.
+2019-6-5 0:49:34 Removing second player pawn.
+2019-6-5 0:49:35 Second player selects field.
+2019-6-5 0:49:37 First player select field.
+2019-6-5 0:49:38 Second player selects field.
+2019-6-5 0:49:39 First player select field.
+2019-6-5 0:49:39 Second player selects field.
+2019-6-5 0:49:40 First player select field.
+2019-6-5 0:49:41 Second player selects field.
+2019-6-5 0:49:41 First player select field.
+2019-6-5 0:49:42 Second player selects field.
+2019-6-5 0:49:44 Removing first player pawn.
+2019-6-5 0:49:50 First player select field.
+2019-6-5 1:0:56 New game.
+2019-6-5 1:0:59 First player selects field.
+2019-6-5 1:0:59 Second player selects field.
+2019-6-5 1:1:0 First player selects field.
+2019-6-5 1:1:1 Second player selects field.
+2019-6-5 1:1:2 First player selects field.
+2019-6-5 1:1:3 Second player selects field.
+2019-6-5 1:1:3 First player selects field.
+2019-6-5 1:1:4 Second player selects field.
+2019-6-5 1:1:5 Removing first player pawn.
+2019-6-5 1:1:7 First player selects field.
+2019-6-5 1:1:7 Second player selects field.
+2019-6-5 1:1:8 First player selects field.
+2019-6-5 1:1:9 Second player selects field.
+2019-6-5 1:1:10 First player selects field.
+2019-6-5 1:1:10 Second player selects field.
+2019-6-5 1:1:11 First player selects field.
+2019-6-5 1:1:12 Second player selects field.
+2019-6-5 1:1:12 First player selects field.
+2019-6-5 1:1:14 Removing second player pawn.
+2019-6-5 1:1:15 Second player selects field.
+2019-6-5 1:4:13 New game.
+2019-6-5 1:4:15 Second player selects field.
+2019-6-5 1:4:15 First player select field.
+2019-6-5 1:4:16 Second player selects field.
+2019-6-5 1:4:16 First player select field.
+2019-6-5 1:4:17 Second player selects field.
+2019-6-5 1:4:18 First player select field.
+2019-6-5 1:4:19 Second player selects field.
+2019-6-5 1:4:19 First player select field.
+2019-6-5 1:4:20 Second player selects field.
+2019-6-5 1:4:21 First player select field.
+2019-6-5 1:4:21 Second player selects field.
+2019-6-5 1:4:22 First player select field.
+2019-6-5 1:4:22 Second player selects field.
+2019-6-5 1:4:23 First player select field.
+2019-6-5 1:4:24 Second player selects field.
+2019-6-5 1:4:24 First player select field.
+2019-6-5 1:4:25 Second player selects field.
+2019-6-5 1:4:26 First player select field.
+2019-6-5 1:4:30 Second player moves.
+2019-6-5 1:4:32 First player moves.
+2019-6-5 1:4:32 Removing second player pawn.
+2019-6-5 1:4:35 Second player moves.
+2019-6-5 1:4:38 First player moves.
+2019-6-5 1:4:41 Second player moves.
+2019-6-5 1:4:45 First player moves.
+2019-6-5 1:4:48 Second player moves.
+2019-6-5 1:4:51 First player moves.
+2019-6-5 1:4:53 Second player moves.
+2019-6-5 1:4:56 First player moves.
+2019-6-5 1:5:0 Second player moves.
+2019-6-5 1:5:2 First player moves.
+2019-6-5 1:5:4 Second player moves.
+2019-6-5 1:5:6 First player moves.
+2019-6-5 1:5:9 Second player moves.
+2019-6-5 1:5:12 First player moves.
+2019-6-5 1:5:15 Second player moves.
+2019-6-5 1:5:17 First player moves.
+2019-6-5 1:5:20 Second player moves.
+2019-6-5 1:5:20 Removing first player pawn.

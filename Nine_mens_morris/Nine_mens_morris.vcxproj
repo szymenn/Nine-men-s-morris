@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="game_automated.cpp" />
     <ClCompile Include="game_base.cpp" />
     <ClCompile Include="linked_list.cpp" />
     <ClCompile Include="player.cpp" />

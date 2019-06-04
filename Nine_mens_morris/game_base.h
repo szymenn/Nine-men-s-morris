@@ -22,7 +22,7 @@ protected:
 	void draw_color(player &player1, player &player2);
 	bool is_ended(player &player1, player &player2);
 	bool set_pawn(player &plr, int position);
-	virtual void move(int player_id, int position);
+	void move(int player_id, int position);
 	void print_available_for_position(int position);
 	bool pick_field(int position, int player_id);
 	linked_list<int> get_available_fields();
@@ -40,12 +40,13 @@ protected:
 	linked_list<int> get_removable_fields(int player_id);
 	void print_removable_fields(int player_id);
 	bool is_already_in(linked_list<int> list, int field);
-	virtual void remove(player &plr);
+	void remove(player &plr);
 	bool is_removable(int field, int player_id);
 	void check_lines(int player_id, linked_list<int> &list);
 	linked_list<int> get_taken_lines(int player_id);
 	void check_is_ended(player &plr);
 	void log(std::string log_info);
+	//linked_list<int> get_movable_fields(int player_id);
 public:
 	virtual ~game_base() = default;
 	void start_game();

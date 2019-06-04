@@ -47,6 +47,9 @@
     <ClCompile Include="game_base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game_automated.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

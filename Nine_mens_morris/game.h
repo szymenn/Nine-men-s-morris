@@ -15,9 +15,7 @@
 //}field_line_t;
 
 class game : public game_base{
-	void move(int player_id, int position) override;
 	void play(player &player1, player &player2) override;
-	void remove(player &plr) override;
 public:
 	game();
 	~game();
