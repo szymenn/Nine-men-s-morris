@@ -7,9 +7,6 @@
 int main(int argc, char* argv[])
 {
 	srand(time(nullptr));
-	//game game1;
-	//game1.print_board();
-	//game1.start_game();
 	game_automated game_automated;
 	game_automated.print_board();
 	game_automated.start_game();

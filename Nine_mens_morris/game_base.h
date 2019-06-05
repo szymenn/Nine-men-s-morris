@@ -46,7 +46,6 @@ protected:
 	linked_list<int> get_taken_lines(int player_id);
 	void check_is_ended(player &plr);
 	void log(std::string log_info);
-	//linked_list<int> get_movable_fields(int player_id);
 public:
 	virtual ~game_base() = default;
 	void start_game();
