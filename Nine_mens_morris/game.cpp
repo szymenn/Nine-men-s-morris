@@ -29,7 +29,7 @@ void game::play(player& player1, player& player2)
 			{
 				if (player1.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					move(player1.get_id(), select_position(player1.get_id()));
 					log("First player moves.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -44,7 +44,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					move(player2.get_id(), select_position(player2.get_id()));
 					log("Second player moves.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -62,7 +62,7 @@ void game::play(player& player1, player& player2)
 				}
 				if (player2.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					move(player2.get_id(), select_position(player2.get_id()));
 					log("Second player moves.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -77,7 +77,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					move(player1.get_id(), select_position(player1.get_id()));
 					log("First player moves.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -98,7 +98,7 @@ void game::play(player& player1, player& player2)
 			{
 				if (player1.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					set_field(player1);
 					log("First player selects field.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -113,7 +113,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					set_field(player2);
 					log("Second player selects field.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -131,7 +131,7 @@ void game::play(player& player1, player& player2)
 				}
 				if (player2.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					set_field(player2);
 					log("Second player selects field.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -146,7 +146,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					set_field(player1);
 					log("First player select field.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -170,7 +170,7 @@ void game::play(player& player1, player& player2)
 			{
 				if (player1.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					move(player1.get_id(), select_position(player1.get_id()));
 					log("First player moves.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -185,7 +185,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					move(player2.get_id(), select_position(player2.get_id()));
 					log("Second player moves.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -203,7 +203,7 @@ void game::play(player& player1, player& player2)
 				}
 				if (player2.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					move(player2.get_id(), select_position(player2.get_id()));
 					log("Second player moves.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -218,7 +218,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					move(player1.get_id(), select_position(player1.get_id()));
 					log("First player moves.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -239,7 +239,7 @@ void game::play(player& player1, player& player2)
 			{
 				if (player1.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					set_field(player1);
 					log("First player selects field.\n");
 					check_lines(player1.get_id(), list_player_1_);
@@ -254,7 +254,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					set_field(player2);
 					log("Second player selects field.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -272,7 +272,7 @@ void game::play(player& player1, player& player2)
 				}
 				if (player2.get_id() == 0)
 				{
-					printf("White pawns turn:\n");
+					std::cout << "White pawns turn:\n";
 					set_field(player2);
 					log("Second player selects field.\n");
 					check_lines(player2.get_id(), list_player_2_);
@@ -287,7 +287,7 @@ void game::play(player& player1, player& player2)
 					{
 						break;
 					}
-					printf("Black pawns turn:\n");
+					std::cout << "Black pawns turn:\n";
 					set_field(player1);
 					log("First player select field.\n");
 					check_lines(player1.get_id(), list_player_1_);

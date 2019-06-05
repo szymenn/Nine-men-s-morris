@@ -3,6 +3,7 @@
 #include <ctime>
 #include <fstream>
 #include<string>
+#include <iostream>
 
 field_t game_base::fields_[24];
 
@@ -126,10 +127,10 @@ field_line_t game_base::field_lines_[16] =
 void game_base::print_board()
 {
 
-	printf("0 ------- 1 ------- 2\n|         |         |\n|  3 ---- 4 ---- 5  |\n|  |      |      |  |\n");
-	printf("|  |  6-- 7 --8  |  |\n|  |  |       |  |  |\n9--10-11      12-13-14\n|  |  |       |  |  |\n");
-	printf("|  |  15-16- 17  |  |\n|  |      |      |  |\n|  18---- 19 ---20  |\n|         |         |\n");
-	printf("21------ 22 -------23\n");
+	std::cout << "0 ------- 1 ------- 2\n|         |         |\n|  3 ---- 4 ---- 5  |\n|  |      |      |  |\n" 
+	<< "|  |  6-- 7 --8  |  |\n|  |  |       |  |  |\n9--10-11      12-13-14\n|  |  |       |  |  |\n"
+	<< "|  |  15-16- 17  |  |\n|  |      |      |  |\n|  18---- 19 ---20  |\n|         |         |\n" 
+	<< "21------ 22 -------23\n";
 }
 
 void game_base::start_game()
@@ -147,13 +148,13 @@ bool game_base::is_ended(player& player1, player& player2)
 	check_is_ended(player2);
 	if (!player1.get_is_lost())
 	{
-		printf("first player loses the game.\n");
+		std::cout << "first player loses the game.\n";
 		log("Game over, first player loses the game.\n");
 		return true;
 	}
 	if (!player2.get_is_lost())
 	{
-		printf("second player loses the game.\n");
+		std::cout << "second player loses the game.\n";
 		log("Game over, second player loses the game.\n");
 		return true;
 	}
@@ -261,13 +262,13 @@ void game_base::draw_color(player& player1, player& player2)
 	const int id = (rand() % 2) + 0;
 	if (id == 0)
 	{
-		printf("White pawns were drawn by first player, he starts the game.\n");
+		std::cout << "White pawns were drawn by first player, he starts the game.\n";
 		player1.set_id(id);
 		player2.set_id(id + 1);
 	}
 	else if (id == 1)
 	{
-		printf("White pawns were drawn by second player, he starts the game.\n");
+		std::cout << "White pawns were drawn by second player, he starts the game.\n";
 		player1.set_id(id);
 		player2.set_id(id - 1);
 	}
@@ -383,7 +384,7 @@ bool game_base::is_removable(int field, int player_id)
 	linked_list<int> list = get_removable_fields(player_id);
 	if (list.is_empty())
 	{
-		printf("There's nothing to remove.\n");
+		std::cout << "There's nothing to remove.\n";
 		return false;
 	}
 	return list.contains(field);
@@ -413,20 +414,20 @@ void game_base::move(int player_id, int position)
 	linked_list<int> list = get_available_for_position(position);
 	while (list.is_empty())
 	{
-		printf("There's none available positions to move for this position.\n");
+		std::cout << "There's none available positions to move for this position.\n";
 	}
-	printf("List of available positions to move:\n");
+	std::cout << "List of available positions to move:\n";
 	list.print();
 	while (!pick_field(position, player_id));
 }
 
 bool game_base::pick_field(int position, int player_id)
 {
-	printf("Pick field: ");
+	std::cout << "Pick field: ";
 	int field;
 	while (scanf_s("%d", &field) != 1 || !is_available(field) || getchar() != '\n')
 	{
-		printf("Not available. Pick again:\n");
+		std::cout << "Not available. Pick again:\n";
 		while (getchar() != '\n');
 	}
 	linked_list<int> list = get_available_for_position(position);
@@ -451,11 +452,11 @@ void game_base::print_removable_fields(int player_id)
 	linked_list<int> list = get_removable_fields(player_id);
 	if (list.is_empty())
 	{
-		printf("There's nothing to remove.\n");
+		std::cout << "There's nothing to remove.\n";
 	}
 	else
 	{
-		printf("Remove one of the available:\n");
+		std::cout << "Remove one of the available:\n";
 		for (int i = 0; i < list.length(); ++i)
 		{
 			printf("%d ", list[i]);
@@ -467,7 +468,7 @@ void game_base::print_removable_fields(int player_id)
 void game_base::print_taken_fields(const int player_id)
 {
 	linked_list<int> list = get_taken_fields(player_id);
-	printf("You can move one of those pawns:\n");
+	std::cout << "You can move one of those pawns:\n";
 	linked_list<int> temp_list;
 	for (int i = 0; i < list.length(); ++i)
 	{
@@ -484,9 +485,9 @@ void game_base::remove(player& plr)
 	int field;
 	while (scanf_s("%d", &field) != 1 || !is_removable(field, plr.get_id()) || getchar() != '\n')
 	{
-		printf("A number should be one of the following:\n");
+		std::cout << "A number should be one of the following:\n";
 		print_removable_fields(plr.get_id());
-		printf("Please select again:\n");
+		std::cout << "Please select again:\n";
 		while (getchar() != '\n');
 	}
 	fields_[field].id = -1;
@@ -506,13 +507,13 @@ void game_base::remove_op_pawn(linked_list<int>& list, player& plr)
 
 int game_base::select_position(int player_id)
 {
-	printf("Please select one of your pawns to move:\n");
+	std::cout << "Please select one of your pawns to move:\n";
 	print_taken_fields(player_id);
 	putchar('\n');
 	int position;
 	while (scanf_s("%d", &position) != 1 || !is_taken_by_player(player_id, position) || getchar() != '\n')
 	{
-		printf("Position of your pawn must have values printed above, select pawn again:\n");
+		std::cout << "Position of your pawn must have values printed above, select pawn again:\n";
 		while (getchar() != '\n');
 	}
 	return position;
@@ -522,12 +523,12 @@ void game_base::set_field(player& plr)
 {
 	int position;
 	linked_list<int> list = get_available_fields();
-	printf("Available fields:\n");
+	std::cout << "Available fields:\n";
 	list.print();
-	printf("Pick a field: ");
+	std::cout << "Pick a field: ";
 	while (scanf_s("%d", &position) != 1 || !is_available(position) || !set_pawn(plr, position) || getchar() != '\n')
 	{
-		printf("Error, Field should be one of the following:\n");
+		std::cout << "Error, Field should be one of the following:\n";
 		list.print();
 		while (getchar() != '\n');
 	}
@@ -537,7 +538,7 @@ bool game_base::set_pawn(player& plr, int position)
 {
 	if (fields_[position].is_taken)
 	{
-		printf("Field is already taken.\n");
+		std::cout << "Field is already taken.\n";
 		return false;
 	}
 

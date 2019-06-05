@@ -1,4 +1,5 @@
 #include "game_automated.h"
+#include <iostream>
 
 game_automated::game_automated()
 = default;
@@ -21,7 +22,7 @@ void game_automated::set_auto(player& plr)
 void game_automated::move_automated(const int player_id, const int position)
 {
 	const int rand_pick = pick_random(get_available_for_position(position));
-	printf("Opponent moves from %d to %d.\n", position, rand_pick);
+	std::cout << "Opponent moves from " << position << " to " << rand_pick << "\n";
 	fields_[position].id = -1;
 	fields_[position].is_taken = false;
 	fields_[rand_pick].id = player_id;
@@ -33,8 +34,8 @@ void game_automated::remove_automated(player& plr, linked_list<int> &list)
 	for (int i = 0; i < list.length(); ++i)
 	{
 		const int rand_pick = pick_random(get_removable_fields(plr.get_id()));
-		printf("Opponent removes your pawn placed at %d field.\n", rand_pick);
-		field_lines_[list[i]].is_changed = true;
+		std::cout << "Opponent removes your pawn placed at " << rand_pick << " field.\n";
+ 		field_lines_[list[i]].is_changed = true;
 		fields_[rand_pick].id = -1;
 		fields_[rand_pick].is_taken = false;
 		plr.set_pawn_number(plr.get_pawn_number() - 1);
@@ -44,7 +45,7 @@ void game_automated::remove_automated(player& plr, linked_list<int> &list)
 void game_automated::set_automated_field(player &plr)
 {
 	int rand_pick = pick_random(get_available_fields());
-	printf("Opponent selects %d field.\n", rand_pick);
+	std::cout << "Opponent selects " << rand_pick << " field.\n";
 	fields_[rand_pick].id = plr.get_id();
 	fields_[rand_pick].is_taken = true;
 	plr.set_start_number(plr.get_start_number() - 1);
@@ -77,7 +78,7 @@ void game_automated::play(player& player1, player& player2)
 		{
 			if (player1.get_id() == 0)
 			{
-				printf("White pawns turn:\n");
+				std::cout << "White pawns turn:\n";
 				move(player1.get_id(), select_position(player1.get_id()));
 				log("First player moves.\n");
 				check_lines(player1.get_id(), list_player_1_);
@@ -92,7 +93,7 @@ void game_automated::play(player& player1, player& player2)
 				{
 					break;
 				}
-				printf("Black pawns turn:\n");
+				std::cout << "Black pawns turn:\n";
 				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
 				log("Second player moves.\n");
 				check_lines(player2.get_id(), list_player_2_);
@@ -110,7 +111,7 @@ void game_automated::play(player& player1, player& player2)
 			}
 			if (player2.get_id() == 0)
 			{
-				printf("White pawns turn:\n");
+				std::cout << "White pawns turn:\n";
 				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
 				log("Second player moves.\n");
 				check_lines(player2.get_id(), list_player_2_);
@@ -125,7 +126,7 @@ void game_automated::play(player& player1, player& player2)
 				{
 					break;
 				}
-				printf("Black pawns turn:\n");
+				std::cout << "Black pawns turn:\n";
 				move(player1.get_id(), select_position(player1.get_id()));
 				log("First player moves.\n");
 				check_lines(player1.get_id(), list_player_1_);
@@ -146,7 +147,7 @@ void game_automated::play(player& player1, player& player2)
 		{
 			if (player1.get_id() == 0)
 			{
-				printf("White pawns turn:\n");
+				std::cout << "White pawns turn:\n";
 				set_field(player1);
 				log("First player selects field.\n");
 				check_lines(player1.get_id(), list_player_1_);
@@ -161,7 +162,7 @@ void game_automated::play(player& player1, player& player2)
 				{
 					break;
 				}
-				printf("Black pawns turn:\n");
+				std::cout << "Black pawns turn:\n";
 				set_automated_field(player2);
 				log("Second player selects field.\n");
 				check_lines(player2.get_id(), list_player_2_);
@@ -179,7 +180,7 @@ void game_automated::play(player& player1, player& player2)
 			}
 			if (player2.get_id() == 0)
 			{
-				printf("White pawns turn:\n");
+				std::cout << "White pawns turn:\n";
 				set_automated_field(player2);
 				log("Second player selects field.\n");
 				check_lines(player2.get_id(), list_player_2_);
@@ -194,7 +195,7 @@ void game_automated::play(player& player1, player& player2)
 				{
 					break;
 				}
-				printf("Black pawns turn:\n");
+				std::cout << "Black pawns turn:\n";
 				set_field(player1);
 				log("First player select field.\n");
 				check_lines(player1.get_id(), list_player_1_);
