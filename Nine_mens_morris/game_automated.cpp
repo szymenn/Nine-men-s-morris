@@ -49,150 +49,167 @@ void game_automated::set_automated_field(player &plr)
 	plr.set_start_number(plr.get_start_number() - 1);
 }
 
-//void game_automated::play(player& player1, player& player2)
-//{
-//	set_auto(player2);
-//	while (!is_ended(player1, player2))
-//	{
-//		linked_list<int> temp_list;
-//		if (player1.get_start_number() == 0)
-//		{
-//			if (player1.get_id() == 0)
-//			{
-//				printf("White pawns turn:\n");
-//				move(player1.get_id(), select_position(player1.get_id()));
-//				log("First player moves.\n");
-//				check_lines(player1.get_id(), list_player_1_);
-//				temp_list = get_lines(player1.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_op_pawn(temp_list, player2);
-//					log("Removing second player pawn.\n");
-//				}
-//				list_player_1_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//				printf("Black pawns turn:\n");
-//				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
-//				log("Second player moves.\n");
-//				check_lines(player2.get_id(), list_player_2_);
-//				temp_list = get_lines(player2.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_automated(player1, temp_list.length());
-//					log("Removing first player pawn.\n");
-//				}
-//				list_player_2_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//			}
-//			if (player2.get_id() == 0)
-//			{
-//				printf("White pawns turn:\n");
-//				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
-//				log("Second player moves.\n");
-//				check_lines(player2.get_id(), list_player_2_);
-//				temp_list = get_lines(player2.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_automated(player1, temp_list.length());
-//					log("Removing first player pawn.\n");
-//				}
-//				list_player_2_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//				printf("Black pawns turn:\n");
-//				move(player1.get_id(), select_position(player1.get_id()));
-//				log("First player moves.\n");
-//				check_lines(player1.get_id(), list_player_1_);
-//				temp_list = get_lines(player1.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_op_pawn(temp_list, player2);
-//					log("Removing second player pawn.\n");
-//				}
-//				list_player_1_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//			}
-//		}
-//		else
-//		{
-//			if (player1.get_id() == 0)
-//			{
-//				printf("White pawns turn:\n");
-//				set_field(player1);
-//				log("First player selects field.\n");
-//				check_lines(player1.get_id(), list_player_1_);
-//				temp_list = get_lines(player1.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_op_pawn(temp_list, player2);
-//					log("Removing second player pawn.\n");
-//				}
-//				list_player_1_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//				printf("Black pawns turn:\n");
-//				set_automated_field(player2);
-//				log("Second player selects field.\n");
-//				check_lines(player2.get_id(), list_player_2_);
-//				temp_list = get_lines(player2.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_automated(player1, temp_list.length());
-//					log("Removing first player pawn.\n");
-//				}
-//				list_player_2_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//			}
-//			if (player2.get_id() == 0)
-//			{
-//				printf("White pawns turn:\n");
-//				set_automated_field(player2);
-//				log("Second player selects field.\n");
-//				check_lines(player2.get_id(), list_player_2_);
-//				temp_list = get_lines(player2.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_automated(player1, temp_list.length());
-//					log("Removing first player pawn.\n");
-//				}
-//				list_player_2_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//				printf("Black pawns turn:\n");
-//				set_field(player1);
-//				log("First player select field.\n");
-//				check_lines(player1.get_id(), list_player_1_);
-//				temp_list = get_lines(player1.get_id());
-//				if (!temp_list.is_empty())
-//				{
-//					remove_op_pawn(temp_list, player2);
-//					log("Removing second player pawn.\n");
-//				}
-//				list_player_1_ = temp_list;
-//				if (is_ended(player1, player2))
-//				{
-//					break;
-//				}
-//			}
-//		}
-//	}
-//}
-//
+linked_list<int> game_automated::get_movable_fields(const int player_id)
+{	
+	linked_list<int> taken_list = get_taken_fields(player_id);
+	linked_list<int> list;
+	for(int i = 0; i < taken_list.length(); ++i)
+	{
+		linked_list<int> temp_list = get_available_for_position(taken_list[i]);
+		if(!temp_list.is_empty())
+		{
+			list.add(taken_list[i]);
+		}
+	}
+	return list;
+}
+
+
+
+void game_automated::play(player& player1, player& player2)
+{
+	set_auto(player2);
+	while (!is_ended(player1, player2))
+	{
+		linked_list<int> temp_list;
+		if (player1.get_start_number() == 0)
+		{
+			if (player1.get_id() == 0)
+			{
+				printf("White pawns turn:\n");
+				move(player1.get_id(), select_position(player1.get_id()));
+				log("First player moves.\n");
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
+				}
+				list_player_1_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+				printf("Black pawns turn:\n");
+				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
+				log("Second player moves.\n");
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_automated(player1, temp_list.length());
+					log("Removing first player pawn.\n");
+				}
+				list_player_2_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+			}
+			if (player2.get_id() == 0)
+			{
+				printf("White pawns turn:\n");
+				move_automated(player2.get_id(), pick_random(get_movable_fields(player2.get_id())));
+				log("Second player moves.\n");
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_automated(player1, temp_list.length());
+					log("Removing first player pawn.\n");
+				}
+				list_player_2_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+				printf("Black pawns turn:\n");
+				move(player1.get_id(), select_position(player1.get_id()));
+				log("First player moves.\n");
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
+				}
+				list_player_1_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+			if (player1.get_id() == 0)
+			{
+				printf("White pawns turn:\n");
+				set_field(player1);
+				log("First player selects field.\n");
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
+				}
+				list_player_1_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+				printf("Black pawns turn:\n");
+				set_automated_field(player2);
+				log("Second player selects field.\n");
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_automated(player1, temp_list.length());
+					log("Removing first player pawn.\n");
+				}
+				list_player_2_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+			}
+			if (player2.get_id() == 0)
+			{
+				printf("White pawns turn:\n");
+				set_automated_field(player2);
+				log("Second player selects field.\n");
+				check_lines(player2.get_id(), list_player_2_);
+				temp_list = get_lines(player2.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_automated(player1, temp_list.length());
+					log("Removing first player pawn.\n");
+				}
+				list_player_2_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+				printf("Black pawns turn:\n");
+				set_field(player1);
+				log("First player select field.\n");
+				check_lines(player1.get_id(), list_player_1_);
+				temp_list = get_lines(player1.get_id());
+				if (!temp_list.is_empty())
+				{
+					remove_op_pawn(temp_list, player2);
+					log("Removing second player pawn.\n");
+				}
+				list_player_1_ = temp_list;
+				if (is_ended(player1, player2))
+				{
+					break;
+				}
+			}
+		}
+	}
+}
+
