@@ -359,3 +359,81 @@
 2019-6-5 13:12:49 First player moves.
 2019-6-5 13:12:49 Second player moves.
 2019-6-5 13:12:49 Removing first player pawn.
+2019-6-5 13:17:11 New game.
+2019-6-5 13:17:11 Second player selects field.
+2019-6-5 13:17:12 First player select field.
+2019-6-5 13:17:14 Second player selects field.
+2019-6-5 13:17:15 First player select field.
+2019-6-5 13:17:15 Second player selects field.
+2019-6-5 13:17:16 Removing first player pawn.
+2019-6-5 13:17:18 First player select field.
+2019-6-5 13:17:20 Second player selects field.
+2019-6-5 13:17:21 First player select field.
+2019-6-5 13:17:21 Second player selects field.
+2019-6-5 13:17:23 First player select field.
+2019-6-5 13:21:32 New game.
+2019-6-5 13:21:33 Second player selects field.
+2019-6-5 13:22:13 Second player selects field.
+2019-6-5 13:22:15 First player select field.
+2019-6-5 13:22:15 Second player selects field.
+2019-6-5 13:22:16 First player select field.
+2019-6-5 13:22:16 Second player selects field.
+2019-6-5 13:22:17 First player select field.
+2019-6-5 13:22:17 Second player selects field.
+2019-6-5 13:22:21 First player select field.
+2019-6-5 13:22:21 Second player selects field.
+2019-6-5 13:22:22 First player select field.
+2019-6-5 13:22:24 Removing second player pawn.
+2019-6-5 13:22:24 Second player selects field.
+2019-6-5 13:22:31 First player select field.
+2019-6-5 13:22:31 Second player selects field.
+2019-6-5 13:22:31 Removing first player pawn.
+2019-6-5 13:22:34 First player select field.
+2019-6-5 13:22:34 Second player selects field.
+2019-6-5 13:22:37 First player select field.
+2019-6-5 13:22:37 Second player selects field.
+2019-6-5 13:22:40 First player select field.
+2019-6-5 13:22:40 Second player moves.
+2019-6-5 13:22:44 First player moves.
+2019-6-5 13:22:44 Second player moves.
+2019-6-5 13:22:47 First player moves.
+2019-6-5 13:22:49 Removing second player pawn.
+2019-6-5 13:22:49 Second player moves.
+2019-6-5 13:22:53 First player moves.
+2019-6-5 13:22:53 Second player moves.
+2019-6-5 13:22:56 First player moves.
+2019-6-5 13:22:56 Second player moves.
+2019-6-5 13:22:58 First player moves.
+2019-6-5 13:22:58 Second player moves.
+2019-6-5 13:23:0 First player moves.
+2019-6-5 13:23:0 Second player moves.
+2019-6-5 13:23:2 First player moves.
+2019-6-5 13:23:2 Second player moves.
+2019-6-5 13:23:8 First player moves.
+2019-6-5 13:23:8 Second player moves.
+2019-6-5 13:23:13 First player moves.
+2019-6-5 13:23:13 Second player moves.
+2019-6-5 13:23:16 First player moves.
+2019-6-5 13:23:16 Second player moves.
+2019-6-5 13:23:20 First player moves.
+2019-6-5 13:23:20 Second player moves.
+2019-6-5 13:23:22 First player moves.
+2019-6-5 13:23:22 Second player moves.
+2019-6-5 13:23:25 First player moves.
+2019-6-5 13:23:25 Second player moves.
+2019-6-5 13:23:26 First player moves.
+2019-6-5 13:23:26 Second player moves.
+2019-6-5 13:23:28 First player moves.
+2019-6-5 13:23:28 Second player moves.
+2019-6-5 13:23:31 First player moves.
+2019-6-5 13:23:31 Second player moves.
+2019-6-5 13:23:40 First player moves.
+2019-6-5 13:23:40 Second player moves.
+2019-6-5 13:23:49 First player moves.
+2019-6-5 13:23:49 Second player moves.
+2019-6-5 13:23:53 First player moves.
+2019-6-5 13:23:53 Second player moves.
+2019-6-5 13:23:58 First player moves.
+2019-6-5 13:23:58 Second player moves.
+2019-6-5 13:24:1 First player moves.
+2019-6-5 13:24:1 Second player moves.

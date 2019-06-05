@@ -28,12 +28,13 @@ void game_automated::move_automated(const int player_id, const int position)
 	fields_[rand_pick].is_taken = true;
 }
 
-void game_automated::remove_automated(player& plr, const int length)
+void game_automated::remove_automated(player& plr, linked_list<int> &list)
 {
-	for (int i = 0; i < length; ++i)
+	for (int i = 0; i < list.length(); ++i)
 	{
 		const int rand_pick = pick_random(get_removable_fields(plr.get_id()));
 		printf("Opponent removes your pawn placed at %d field.\n", rand_pick);
+		field_lines_[list[i]].is_changed = true;
 		fields_[rand_pick].id = -1;
 		fields_[rand_pick].is_taken = false;
 		plr.set_pawn_number(plr.get_pawn_number() - 1);
@@ -98,7 +99,7 @@ void game_automated::play(player& player1, player& player2)
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
-					remove_automated(player1, temp_list.length());
+					remove_automated(player1, temp_list);
 					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
@@ -116,7 +117,7 @@ void game_automated::play(player& player1, player& player2)
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
-					remove_automated(player1, temp_list.length());
+					remove_automated(player1, temp_list);
 					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
@@ -167,7 +168,7 @@ void game_automated::play(player& player1, player& player2)
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
-					remove_automated(player1, temp_list.length());
+					remove_automated(player1, temp_list);
 					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;
@@ -185,7 +186,7 @@ void game_automated::play(player& player1, player& player2)
 				temp_list = get_lines(player2.get_id());
 				if (!temp_list.is_empty())
 				{
-					remove_automated(player1, temp_list.length());
+					remove_automated(player1, temp_list);
 					log("Removing first player pawn.\n");
 				}
 				list_player_2_ = temp_list;

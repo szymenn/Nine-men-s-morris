@@ -481,7 +481,17 @@ void game_base::print_taken_fields(const int player_id)
 
 void game_base::remove(player& plr)
 {
-	
+	int field;
+	while (scanf_s("%d", &field) != 1 || !is_removable(field, plr.get_id()) || getchar() != '\n')
+	{
+		printf("A number should be one of the following:\n");
+		print_removable_fields(plr.get_id());
+		printf("Please select again:\n");
+		while (getchar() != '\n');
+	}
+	fields_[field].id = -1;
+	fields_[field].is_taken = false;
+	plr.set_pawn_number(plr.get_pawn_number() - 1);
 }
 
 void game_base::remove_op_pawn(linked_list<int>& list, player& plr)
