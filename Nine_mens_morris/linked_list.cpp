@@ -3,8 +3,8 @@
 template <class T>
 linked_list<T>::linked_list()
 {
-	head = NULL;
-	tail = NULL;
+	head = nullptr;
+	tail = nullptr;
 	size_ = 0;
 }
 
@@ -14,22 +14,22 @@ void linked_list<T>::add(T data)
 	if (!head) {
 		head = new node<T>;
 		head->data = data;
-		head->next = NULL;
-		head->prev = NULL;
+		head->next = nullptr;
+		head->prev = nullptr;
 		tail = head;
 	}
 	else {
 		if (tail == head) {
 			tail = new node<T>;
 			tail->data = data;
-			tail->next = NULL;
+			tail->next = nullptr;
 			tail->prev = head;
 			head->next = tail;
 		}
 		else {
 			node<T>* ins_data = new node<T>;
 			ins_data->data = data;
-			ins_data->next = NULL;
+			ins_data->next = nullptr;
 			ins_data->prev = tail;
 			tail->next = ins_data;
 			tail = ins_data;
