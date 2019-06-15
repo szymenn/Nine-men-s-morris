@@ -1,2 +1,2 @@
 # info 
-Simple console nine men's morris implementation I made as an university assignment
+Nine men's morris console implementation I made as an university assignment
